@@ -40,6 +40,6 @@ const done = ref(true)
 
 暂停、拖坐标或任何「未闭合 fence」快照场景，务必 `final=true`，否则可能出现节点重复。
 
-## SSR
+## 服务端渲染
 
-组件依赖 `document` / `window` / Teleport。Nuxt 等 SSR 环境请包在 `ClientOnly` 内。
+本组件只能在浏览器里运行。如果项目会先在服务端出 HTML（例如 Nuxt），请把组件包在 `ClientOnly` 里。
