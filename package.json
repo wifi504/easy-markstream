@@ -1,0 +1,39 @@
+{
+  "name": "easy-markstream",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @ezview/markstream-playground dev",
+    "build": "pnpm --filter @ezview/markstream build",
+    "docs:dev": "pnpm --filter @ezview/markstream-docs dev",
+    "docs:build": "pnpm --filter @ezview/markstream-docs build",
+    "docs:preview": "pnpm --filter @ezview/markstream-docs preview",
+    "type-check": "pnpm --filter @ezview/markstream type-check",
+    "lint:js": "eslint .",
+    "lint:js:fix": "eslint . --fix",
+    "lint:css": "stylelint \"**/*.{css,vue,html}\"",
+    "lint:css:fix": "stylelint \"**/*.{css,vue,html}\" --fix",
+    "lint:all": "pnpm lint:js && pnpm lint:css",
+    "lint:all:fix": "pnpm lint:js:fix && pnpm lint:css:fix"
+  },
+  "devDependencies": {
+    "@ezview/eslint-config": "^1.0.0",
+    "eslint": "^9.32.0",
+    "postcss-html": "^1.8.0",
+    "postcss-less": "^6.0.0",
+    "stylelint": "^16.26.1",
+    "stylelint-config-rational-order": "^0.1.2",
+    "stylelint-config-recommended-vue": "^1.6.1",
+    "stylelint-config-standard": "^39.0.1",
+    "stylelint-less": "^4.0.0",
+    "stylelint-order": "^6.0.4"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild"]
+  }
+}

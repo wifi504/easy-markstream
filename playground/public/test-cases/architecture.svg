@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="220" viewBox="0 0 560 220" role="img" aria-label="系统架构图">
+  <rect width="560" height="220" rx="8" fill="#ffffff" stroke="#d1d9e0"/>
+  <rect x="40" y="70" width="120" height="56" rx="8" fill="#ddf4ff" stroke="#0969da"/>
+  <text x="100" y="104" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="14" fill="#1f2328">Client</text>
+  <rect x="220" y="70" width="120" height="56" rx="8" fill="#dafbe1" stroke="#1a7f37"/>
+  <text x="280" y="104" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="14" fill="#1f2328">API</text>
+  <rect x="400" y="70" width="120" height="56" rx="8" fill="#fff1e5" stroke="#bc4c00"/>
+  <text x="460" y="104" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="14" fill="#1f2328">DB</text>
+  <path d="M160 98 H220" stroke="#59636e" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M340 98 H400" stroke="#59636e" stroke-width="2" marker-end="url(#arrow)"/>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#59636e"/>
+    </marker>
+  </defs>
+  <text x="280" y="40" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="16" font-weight="600" fill="#1f2328">系统架构图</text>
+  <text x="280" y="180" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="13" fill="#59636e">architecture.svg</text>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="200" viewBox="0 0 480 200" role="img" aria-label="测试图片">
+  <rect width="480" height="200" rx="8" fill="#f6f8fa" stroke="#d1d9e0"/>
+  <rect x="32" y="36" width="120" height="128" rx="8" fill="#ddf4ff" stroke="#54aeff"/>
+  <circle cx="92" cy="84" r="22" fill="#54aeff"/>
+  <path d="M48 148 L78 110 L104 132 L128 96 L152 148 Z" fill="#0969da"/>
+  <text x="180" y="88" font-family="Segoe UI, sans-serif" font-size="22" font-weight="600" fill="#1f2328">测试图片</text>
+  <text x="180" y="120" font-family="Segoe UI, sans-serif" font-size="14" fill="#59636e">Markdown image stress sample</text>
+</svg>

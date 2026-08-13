@@ -1,0 +1,57 @@
+---
+description: GitHub Flow 工作流确认、分支规范与 commit 消息格式（改代码/操作 git 时必须遵守）
+alwaysApply: true
+---
+
+# GitHub Flow 与 Commit 规范
+
+改代码或操作 git 前必须遵守本规则。
+
+## 开工前确认（不可跳过）
+
+用户要求改代码时，即使已能判断意图，也必须先确认：
+
+1. 本次是 **feat** 还是 **fix** 工作流（文档可用 **docs**）
+2. 新分支命名（须给出示例供用户确认或修改）
+
+确认话术示例：
+
+> 本次按 **feat** 流程：从 `main` 签出 `feat/xxx`，开 PR 合回 `main`。分支名是否 OK？
+>
+> 本次按 **fix** 流程：从 `main` 签出 `fix/xxx`，开 PR 合回 `main`。分支名是否 OK？
+
+未确认前不要建分支、改代码或提交。
+
+## GitHub Flow
+
+长期只有 `main`（始终可发布）。做任何分支操作前，必须先 `pull` 远程 `main`。
+
+| 场景 | 签出源 | 分支名 | 合并目标 |
+|------|--------|--------|----------|
+| 新需求 | `main` | `feat/xxx` | PR → `main` |
+| Bug | `main` | `fix/xxx` | PR → `main` |
+| 文档 | `main` | `docs/xxx` | PR → `main` |
+
+- 通过 **Pull Request 合回 `main`**，不本地直推 `main`
+- npm 发版从 `main` 打 tag
+
+## Commit 规范
+
+格式：`<type>(<scope>): <description>`
+
+- **type**：`feat` | `fix` | `docs` | `style` | `refactor` | `perf` | `test` | `build` | `ci` | `chore` | `revert`
+- **scope**：本次影响的模块（如 `markstream`、`docs`、`playground`）
+- **description**：中文，动词开头
+- 非极简单变更必须有 Body：标题后空一行，用 markdown 无序列表分点；可用 `**加粗**`
+
+```
+feat(markstream): 支持批量订单导出
+
+- 新增 Excel 导出接口
+- 新增异步导出任务
+- 新增导出记录管理
+```
+
+```
+fix(markstream): 解决支付超时的问题
+```

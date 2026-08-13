@@ -1,0 +1,718 @@
+/* GitHub 浅色主题：挂在 .easy-markstream / data-custom-id=easy-markstream 下 */
+
+.easy-markstream::selection,
+.easy-markstream *::selection {
+  color: inherit;
+  background: rgb(9 105 218 / 18%);
+}
+
+/*
+ * GitHub README 风格：仅通过 custom-id 作用域 + CSS 变量覆写（官方推荐做法）
+ * 参考 Primer / github-markdown-css 的关键视觉特征
+ */
+.easy-markstream [data-custom-id='easy-markstream'].markstream-vue,
+.easy-markstream .markstream-vue[data-custom-id='easy-markstream'] {
+  --ms-foreground: 210 10% 14%;
+  --ms-muted-foreground: 215 8% 37%;
+  --ms-border: 210 14% 83%;
+  --ms-secondary: 210 17% 98%;
+  --ms-accent: 210 17% 95%;
+  --ms-primary: 212 92% 45%;
+  --ms-font-sans: -apple-system, blinkmacsystemfont, 'Segoe UI', 'Noto Sans', helvetica, arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  --ms-font-mono: ui-monospace, sfmono-regular, 'SF Mono', menlo, consolas, 'Liberation Mono',
+    monospace;
+  --code-bg: #f6f8fa;
+  --code-fg: #1f2328;
+  --code-border: #d1d9e0;
+  --code-header-bg: #f6f8fa;
+  --code-line-number: #59636e;
+  --table-border: #d2d8e0;
+  --inline-code-bg: rgb(175 184 193 / 20%);
+  --inline-code-border: transparent;
+  --ms-radius: 6px;
+
+  /* 正文节奏：覆盖 markstream docs 默认 leading / flow */
+  --ms-text-body: 16px;
+  --ms-leading-body: 24px;
+  --ms-flow-paragraph-y: 0px;
+  --ms-flow-blockquote-y: 0px;
+  --ms-flow-list-item-y: 0px;
+  --ms-flow-blockquote-indent: 16px;
+  --blockquote-border: #d1d9e0;
+  --blockquote-fg: #59636e;
+  --list-marker: #1f2328;
+  --list-counter-marker: #1f2328;
+
+  color: #1f2328;
+  font-weight: 400;
+  font-size: 16px;
+  font-family: var(--ms-font-sans);
+  line-height: 24px;
+  overflow-wrap: break-word;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] .heading-node,
+.easy-markstream [data-custom-id='easy-markstream'] .heading-1,
+.easy-markstream [data-custom-id='easy-markstream'] .heading-2,
+.easy-markstream [data-custom-id='easy-markstream'] .heading-3,
+.easy-markstream [data-custom-id='easy-markstream'] .heading-4,
+.easy-markstream [data-custom-id='easy-markstream'] .heading-5,
+.easy-markstream [data-custom-id='easy-markstream'] .heading-6,
+.easy-markstream [data-custom-id='easy-markstream'] h1,
+.easy-markstream [data-custom-id='easy-markstream'] h2,
+.easy-markstream [data-custom-id='easy-markstream'] h3,
+.easy-markstream [data-custom-id='easy-markstream'] h4,
+.easy-markstream [data-custom-id='easy-markstream'] h5,
+.easy-markstream [data-custom-id='easy-markstream'] h6 {
+  margin: 24px 0 16px !important;
+  color: #1f2328;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+/*
+ * 首块标题去 margin-top。
+ * markstream docs 实际结构是 .node-slot > .node-content > heading，
+ * 标题并不是 .markstream-vue 的直接子节点。
+ */
+.easy-markstream [data-custom-id='easy-markstream'] .node-slot:first-child[data-node-type='heading'] .heading-node,
+.easy-markstream [data-custom-id='easy-markstream'] :is(.blockquote, .blockquote-node, blockquote) > .heading-node:first-child {
+  margin-top: 0 !important;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] .heading-1,
+.easy-markstream [data-custom-id='easy-markstream'] h1.heading-node,
+.easy-markstream [data-custom-id='easy-markstream'] h1 {
+  padding: 0 0 0.3em !important;
+  font-size: 32px;
+  border-bottom: 1px solid #d1d9e0b3;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] .heading-2,
+.easy-markstream [data-custom-id='easy-markstream'] h2.heading-node,
+.easy-markstream [data-custom-id='easy-markstream'] h2 {
+  padding: 0 0 0.3em !important;
+  font-size: 24px;
+  border-bottom: 1px solid #d1d9e0b3;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] .heading-3,
+.easy-markstream [data-custom-id='easy-markstream'] h3.heading-node,
+.easy-markstream [data-custom-id='easy-markstream'] h3 {
+  padding: 0 !important;
+  font-size: 20px;
+  border-bottom: 0 !important;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] .heading-4,
+.easy-markstream [data-custom-id='easy-markstream'] h4.heading-node,
+.easy-markstream [data-custom-id='easy-markstream'] h4 {
+  padding: 0 !important;
+  font-size: 16px;
+  border-bottom: 0 !important;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] .heading-5,
+.easy-markstream [data-custom-id='easy-markstream'] h5.heading-node,
+.easy-markstream [data-custom-id='easy-markstream'] h5 {
+  padding: 0 !important;
+  font-size: 14px;
+  border-bottom: 0 !important;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] .heading-6,
+.easy-markstream [data-custom-id='easy-markstream'] h6.heading-node,
+.easy-markstream [data-custom-id='easy-markstream'] h6 {
+  padding: 0 !important;
+  color: #59636e;
+  font-size: 13.6px;
+  border-bottom: 0 !important;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] .paragraph-node,
+.easy-markstream [data-custom-id='easy-markstream'] p {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: #1f2328;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+/* 引用：去 UA / markstream 左右 margin，嵌套直接套 */
+.easy-markstream [data-custom-id='easy-markstream'] .blockquote,
+.easy-markstream [data-custom-id='easy-markstream'] .blockquote-node,
+.easy-markstream [data-custom-id='easy-markstream'] blockquote {
+  margin: 0 0 16px !important;
+  padding: 0 16px !important;
+  color: var(--blockquote-fg, #59636e);
+  border-left: 4px solid #d1d9e0 !important;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] .blockquote .blockquote,
+.easy-markstream [data-custom-id='easy-markstream'] .blockquote-node .blockquote-node,
+.easy-markstream [data-custom-id='easy-markstream'] blockquote blockquote {
+  margin-top: 0 !important;
+  margin-bottom: 16px !important;
+}
+
+/* 上标 / 下标：压低偏移，避免飞太高或沉太深 */
+.easy-markstream [data-custom-id='easy-markstream'] .superscript-node,
+.easy-markstream [data-custom-id='easy-markstream'] sup {
+  position: static !important;
+  top: auto !important;
+  bottom: auto !important;
+  font-size: 0.75em;
+  vertical-align: 0.2em;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] .subscript-node,
+.easy-markstream [data-custom-id='easy-markstream'] sub {
+  position: static !important;
+  top: auto !important;
+  bottom: auto !important;
+  font-size: 0.75em;
+  vertical-align: -0.15em;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] a,
+.easy-markstream [data-custom-id='easy-markstream'] .link-node {
+  color: #0969da;
+  text-decoration: none;
+}
+
+/* 禁止整链下划线，避免划到尾部 share 图标；文案下划线由 MarkdownLink 自己处理 */
+.easy-markstream [data-custom-id='easy-markstream'] a:hover,
+.easy-markstream [data-custom-id='easy-markstream'] .link-node:hover {
+  text-decoration: none;
+}
+
+/* 括号 chip：不要被全局链接蓝覆盖 */
+.easy-markstream [data-custom-id='easy-markstream'] .ms-md-link.is-chip,
+.easy-markstream [data-custom-id='easy-markstream'] a.ms-md-link.is-chip {
+  color: #1f2328;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] .inline-code,
+.easy-markstream [data-custom-id='easy-markstream'] code:not(.markstream-pre__code) {
+  padding: 0.2em 0.4em;
+  font-size: 85%;
+  font-family: var(--ms-font-mono);
+  background: rgb(175 184 193 / 20%);
+  border-radius: 6px;
+}
+
+/*
+ * 代码块外壳：流式 PreCodeNode + 闭合 stream-diffs 统一观感
+ * - 背景 #f6f8fa、无边框、圆角 4px、自身无 margin
+ * - padding：上下 8px，左右 44px / 12px
+ * - 长行不换行；正文区横向细滚动条
+ */
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container,
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container.border,
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container.rounded-lg {
+  --code-bg: #f6f8fa;
+  --code-border: transparent;
+
+  /* Header 背景与代码区一致 */
+  --code-header-bg: #f6f8fa;
+  --diffs-light-bg: #f6f8fa;
+  --diffs-dark-bg: #f6f8fa;
+  --markstream-code-padding-y: 8px;
+  --markstream-code-padding-x: 12px;
+  --markstream-code-padding-left: 44px;
+
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  max-height: none !important;
+  margin: 0 0 16px !important;
+
+  /* visible：Header 上 HoverPopover 不被裁切；正文区单独 hidden */
+  overflow: visible !important;
+  background: #f6f8fa !important;
+  border: 0 !important;
+  border-color: transparent !important;
+  border-width: 0 !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+}
+
+/* Mermaid 源码区嵌套的代码块：块间距由外壳承担，内部不再加底边距 */
+.easy-markstream [data-custom-id='easy-markstream'] .ms-mermaid .code-block-container,
+.easy-markstream [data-custom-id='easy-markstream'] .ms-mermaid .code-block-container.border,
+.easy-markstream [data-custom-id='easy-markstream'] .ms-mermaid .code-block-container.rounded-lg {
+  margin: 0 !important;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container .code-block-shell-content,
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container .code-editor-layer,
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container .code-editor-container,
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container .stream-diffs-shell,
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container .stream-diffs-surface,
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container pre[data-markstream-pre],
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container .code-pre-fallback {
+  margin: 0 !important;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container,
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container * {
+  max-height: none !important;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container .code-block-shell-content,
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container .code-editor-layer,
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container .code-editor-container {
+  overflow: auto hidden !important;
+  scrollbar-width: none !important;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container .code-block-shell-content::-webkit-scrollbar,
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container .code-editor-layer::-webkit-scrollbar,
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container .code-editor-container::-webkit-scrollbar,
+.easy-markstream [data-custom-id='easy-markstream'] pre[data-markstream-pre]::-webkit-scrollbar,
+.easy-markstream [data-custom-id='easy-markstream'] .code-pre-fallback::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] pre[data-markstream-pre],
+.easy-markstream [data-custom-id='easy-markstream'] .code-pre-fallback {
+  --markstream-code-padding-y: 8px;
+  --markstream-code-padding-x: 12px;
+  --markstream-code-padding-left: 44px;
+  --markstream-pre-line-number-top: 8px;
+  --markstream-pre-line-number-left: 0px;
+  --markstream-pre-line-number-width: 2ch;
+  --markstream-pre-line-number-padding-left: 2ch;
+  --markstream-pre-line-number-padding-right: 1ch;
+
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0 !important;
+  padding: 8px 12px 8px 44px !important;
+
+  /*
+   * 必须裁切：absolute 行号 height:auto 在换行瞬间可能比 pre 更高，
+   * 若 overflow 可见会“跳出”灰底代码块。横向滚动改由内部 code 承担。
+   */
+  overflow: hidden !important;
+  color: #1f2328;
+  font-size: 13px;
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  line-height: 18px;
+  white-space: pre;
+  word-break: normal;
+  background: #f6f8fa !important;
+  border: 0 !important;
+  border-radius: 4px !important;
+  scrollbar-width: none !important;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] pre[data-markstream-pre] .markstream-pre__line-numbers,
+.easy-markstream [data-custom-id='easy-markstream'] pre[data-markstream-pre] [class*='line-number'] {
+  color: #59636e;
+  user-select: none;
+}
+
+/*
+ * 行号：必须 absolute（markstream 默认），不能 sticky。
+ * 几何与结束态 stream-diffs gutter 对齐：
+ *   content-box + padL 2ch + width 2ch(右对齐) + padR 1ch
+ * 勿写 width:44px/border-box，否则数字右对齐会偏右 ~6px，切换时闪一下。
+ * top+bottom 拉满内容区并裁切，避免换行帧行号漏出块外。
+ */
+.easy-markstream [data-custom-id='easy-markstream'] pre[data-markstream-pre] .markstream-pre__line-numbers {
+  position: absolute !important;
+  inset: var(--markstream-pre-line-number-top, 8px) auto var(--markstream-pre-line-number-top, 8px) var(--markstream-pre-line-number-left, 0) !important;
+  z-index: 1;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+  box-sizing: content-box !important;
+  width: 2ch !important;
+  min-width: 2ch !important;
+  max-width: 2ch !important;
+  height: auto !important;
+  max-height: none !important;
+  padding-right: 1ch !important;
+  padding-left: 2ch !important;
+  overflow: hidden !important;
+  background: #f6f8fa !important;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] pre[data-markstream-pre] .markstream-pre__code {
+  display: block;
+  min-width: max-content;
+  max-width: none;
+
+  /* 行号槽已由 pre padding-left 承担；勿再给 code 加 padding（会双倍偏移） */
+  padding-left: 0 !important;
+  overflow: auto hidden !important;
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+  white-space: pre;
+  background: transparent;
+  scrollbar-width: none !important;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] pre[data-markstream-pre] .markstream-pre__code::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Header：背景与代码区一致；固定高度避免流式/结束切换跳动（6+28+6） */
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-header {
+  position: relative;
+  z-index: 2;
+  display: flex !important;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 40px !important;
+  min-height: 40px !important;
+
+  /* 左侧 0：语言名由 .ms-code__left padding-left:44px 与代码正文对齐 */
+  padding: 6px 10px 6px 0 !important;
+
+  /* 防止长代码 min-width:max-content 把复制按钮顶出可视区 */
+  overflow: hidden !important;
+  color: #59636e !important;
+  background: #f6f8fa !important;
+  background-color: #f6f8fa !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--diagram-border, #d0d7de) !important;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-header .code-header-main,
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-header .icon-slot,
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-header .code-header-title,
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-header .code-header-copy,
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-header .code-header-caption {
+  display: none !important;
+}
+
+/*
+ * stream-diffs 增强面：diffs-container 是 Shadow DOM，
+ * 默认 --diffs-light-bg:#fff，会盖住外壳的 #f6f8fa。
+ * 自定义属性可穿透进 shadow，强制与降级面一致。
+ */
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container .stream-diffs-shell,
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container .stream-diffs-surface,
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container .code-editor-container,
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container .code-editor-layer,
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container .code-block-shell-content,
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container diffs-container {
+  --diffs-light-bg: #f6f8fa !important;
+  --diffs-dark-bg: #f6f8fa !important;
+
+  height: auto !important;
+  max-height: none !important;
+  overflow: auto hidden !important;
+  background: #f6f8fa !important;
+  background-color: #f6f8fa !important;
+  border: 0 !important;
+  border-radius: 4px !important;
+  scrollbar-width: none !important;
+}
+
+/*
+ * 表格：内容多宽 wrapper 多宽，loading 遮罩才能相对表格居中
+ * markstream 默认 scrollbar-gutter:stable 会在窄表右侧多留 ~15px，看起来像错位
+ */
+.easy-markstream [data-custom-id='easy-markstream'] .table-node-wrapper {
+  width: max-content;
+  max-width: 100%;
+  margin: 0 0 16px;
+  overflow-x: auto;
+
+  /* 原生条隐藏，改用与代码块同款悬浮细条 */
+  scrollbar-width: none;
+  scrollbar-gutter: auto !important;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] .table-node-wrapper::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] .math-block {
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] .math-block::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] table,
+.easy-markstream [data-custom-id='easy-markstream'] .table-node {
+  width: max-content;
+  max-width: 100%;
+  margin: 0;
+  overflow: hidden;
+  table-layout: auto !important;
+  border: 1px solid #d2d8e0;
+  border-radius: 4px;
+
+  /* separate 才能让外框圆角生效；单元格只画右/下边，避免与外框叠线 */
+  border-collapse: separate;
+  border-spacing: 0;
+  box-shadow: none;
+}
+
+/* 与公式 MathBlockNode 的 .math-loading-spinner 统一为 20px */
+.easy-markstream [data-custom-id='easy-markstream'] .table-node__spinner,
+.easy-markstream [data-custom-id='easy-markstream'] .math-loading-spinner {
+  width: 20px !important;
+  height: 20px !important;
+  border: 2px solid color-mix(in srgb, var(--loading-spinner, #59636e) 15%, transparent) !important;
+  border-top-color: color-mix(in srgb, var(--loading-spinner, #59636e) 80%, transparent) !important;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] .table-node__loading {
+  /* 相对 wrapper（= 表格内容宽）居中 */
+  inset: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* markstream TableNode 无关闭列宽拖拽的 API，直接屏蔽手柄（含 ::after 竖线） */
+.easy-markstream [data-custom-id='easy-markstream'] .table-node__resize-handle,
+.easy-markstream [data-custom-id='easy-markstream'] .table-node__resize-handle::before,
+.easy-markstream [data-custom-id='easy-markstream'] .table-node__resize-handle::after {
+  display: none !important;
+  width: 0 !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+  opacity: 0 !important;
+  content: none !important;
+  pointer-events: none !important;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] th,
+.easy-markstream [data-custom-id='easy-markstream'] td,
+.easy-markstream [data-custom-id='easy-markstream'] .table-cell {
+  padding: 6px 13px;
+  border: 0;
+  border-right: 1px solid #d2d8e0;
+  border-bottom: 1px solid #d2d8e0;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] th:last-child,
+.easy-markstream [data-custom-id='easy-markstream'] td:last-child,
+.easy-markstream [data-custom-id='easy-markstream'] .table-cell:last-child {
+  border-right: 0;
+}
+
+/* 只去掉最后一行数据的底边，避免与表格外框叠线；表头必须保留下边框 */
+.easy-markstream [data-custom-id='easy-markstream'] tbody tr:last-child td,
+.easy-markstream [data-custom-id='easy-markstream'] tbody tr:last-child .table-cell {
+  border-bottom: 0;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] th,
+.easy-markstream [data-custom-id='easy-markstream'] thead th {
+  font-weight: 600;
+  background: #f6f8fa;
+
+  /* 覆盖 markstream thead 默认 2px 底边，避免看起来像双线/错位 */
+  border-bottom: 1px solid #d2d8e0 !important;
+  cursor: default;
+}
+
+/* 斑马纹：标题色 #f6f8fa 的一半（与白底 50% 混合） */
+.easy-markstream [data-custom-id='easy-markstream'] tr:nth-child(2n) td {
+  background: color-mix(in srgb, #f6f8fa 50%, #fff);
+}
+
+/*
+ * hover 画在 td 上：斑马纹背景在单元格，只给 tr 设 hover 会被盖住
+ */
+.easy-markstream [data-custom-id='easy-markstream'] tbody tr:hover td,
+.easy-markstream [data-custom-id='easy-markstream'] tbody tr:nth-child(2n):hover td {
+  background: #f0f2f4;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] hr {
+  height: 4px;
+  margin: 24px 0;
+  background: #d1d9e0;
+  border: 0;
+}
+
+/* 列表：序号槽 1.5 中文字符宽；marker 跟正文字色 */
+.easy-markstream [data-custom-id='easy-markstream'] ul,
+.easy-markstream [data-custom-id='easy-markstream'] ol,
+.easy-markstream [data-custom-id='easy-markstream'] .list-node {
+  margin-top: 0;
+  margin-bottom: 16px;
+  padding-left: 1.5em !important;
+  color: #1f2328;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  list-style-position: outside;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] .list-item,
+.easy-markstream [data-custom-id='easy-markstream'] li {
+  margin: 0 !important;
+  padding-left: 0 !important;
+  color: inherit;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] .list-item + .list-item,
+.easy-markstream [data-custom-id='easy-markstream'] li + li {
+  margin-top: 4px !important;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] ul > .list-item::marker,
+.easy-markstream [data-custom-id='easy-markstream'] ol > .list-item::marker,
+.easy-markstream [data-custom-id='easy-markstream'] ul > li::marker,
+.easy-markstream [data-custom-id='easy-markstream'] ol > li::marker {
+  color: inherit;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] .list-item > .paragraph-node,
+.easy-markstream [data-custom-id='easy-markstream'] li > .paragraph-node,
+.easy-markstream [data-custom-id='easy-markstream'] li > p {
+  margin: 0 !important;
+  font-weight: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/*
+ * 引用内统一引用色。blockquote 里会再嵌套一层 .markstream-vue，
+ * 该层写死了正文色，color:inherit 会吃到正文色而不是引用色，故显式指定。
+ */
+.easy-markstream [data-custom-id='easy-markstream'] :is(.blockquote, .blockquote-node, blockquote) {
+  --blockquote-fg: #59636e;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] :is(.blockquote, .blockquote-node, blockquote) .markstream-vue,
+.easy-markstream [data-custom-id='easy-markstream'] :is(.blockquote, .blockquote-node, blockquote) .paragraph-node,
+.easy-markstream [data-custom-id='easy-markstream'] :is(.blockquote, .blockquote-node, blockquote) p,
+.easy-markstream [data-custom-id='easy-markstream'] :is(.blockquote, .blockquote-node, blockquote) .text-node,
+.easy-markstream [data-custom-id='easy-markstream'] :is(.blockquote, .blockquote-node, blockquote) .list-node,
+.easy-markstream [data-custom-id='easy-markstream'] :is(.blockquote, .blockquote-node, blockquote) .list-item,
+.easy-markstream [data-custom-id='easy-markstream'] :is(.blockquote, .blockquote-node, blockquote) li,
+.easy-markstream [data-custom-id='easy-markstream'] :is(.blockquote, .blockquote-node, blockquote) .heading-node,
+.easy-markstream [data-custom-id='easy-markstream'] :is(.blockquote, .blockquote-node, blockquote) .heading-1,
+.easy-markstream [data-custom-id='easy-markstream'] :is(.blockquote, .blockquote-node, blockquote) .heading-2,
+.easy-markstream [data-custom-id='easy-markstream'] :is(.blockquote, .blockquote-node, blockquote) .heading-3,
+.easy-markstream [data-custom-id='easy-markstream'] :is(.blockquote, .blockquote-node, blockquote) .heading-4,
+.easy-markstream [data-custom-id='easy-markstream'] :is(.blockquote, .blockquote-node, blockquote) .heading-5,
+.easy-markstream [data-custom-id='easy-markstream'] :is(.blockquote, .blockquote-node, blockquote) .heading-6,
+.easy-markstream [data-custom-id='easy-markstream'] :is(.blockquote, .blockquote-node, blockquote) h1,
+.easy-markstream [data-custom-id='easy-markstream'] :is(.blockquote, .blockquote-node, blockquote) h2,
+.easy-markstream [data-custom-id='easy-markstream'] :is(.blockquote, .blockquote-node, blockquote) h3,
+.easy-markstream [data-custom-id='easy-markstream'] :is(.blockquote, .blockquote-node, blockquote) h4,
+.easy-markstream [data-custom-id='easy-markstream'] :is(.blockquote, .blockquote-node, blockquote) h5,
+.easy-markstream [data-custom-id='easy-markstream'] :is(.blockquote, .blockquote-node, blockquote) h6 {
+  color: var(--blockquote-fg) !important;
+}
+
+/* 引用里的链接仍保持链接色；chip 保持中性色 */
+.easy-markstream [data-custom-id='easy-markstream'] :is(.blockquote, .blockquote-node, blockquote) .ms-md-link,
+.easy-markstream [data-custom-id='easy-markstream'] :is(.blockquote, .blockquote-node, blockquote) .link-node,
+.easy-markstream [data-custom-id='easy-markstream'] :is(.blockquote, .blockquote-node, blockquote) a {
+  color: #0969da !important;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] :is(.blockquote, .blockquote-node, blockquote) .ms-md-link.is-chip,
+.easy-markstream [data-custom-id='easy-markstream'] :is(.blockquote, .blockquote-node, blockquote) a.ms-md-link.is-chip {
+  color: #1f2328 !important;
+}
+
+/*
+ * 任务列表：布局完全跟 ul.list-disc（padding-left:1.5em + outside 槽），
+ * 只把圆点换成自定义 checkbox。嵌套 .markstream-vue 的 contain:paint 会裁切
+ * 槽外绘制，故关掉 contain，把图标绝对定位进 ul 左槽。
+ */
+.easy-markstream [data-custom-id='easy-markstream'] li:has(.checkbox-node),
+.easy-markstream [data-custom-id='easy-markstream'] .list-item:has(.checkbox-node) {
+  position: relative;
+  margin-left: 0 !important;
+  overflow: visible !important;
+  list-style: none !important;
+}
+
+/* 任务项段落在嵌套 .markstream-vue 内，吃不到 li > p 的清零 */
+.easy-markstream [data-custom-id='easy-markstream'] li:has(.checkbox-node) .paragraph-node,
+.easy-markstream [data-custom-id='easy-markstream'] .list-item:has(.checkbox-node) .paragraph-node,
+.easy-markstream [data-custom-id='easy-markstream'] li:has(.checkbox-node) p {
+  margin: 0 !important;
+  overflow: visible !important;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] li:has(.checkbox-node) > .markstream-vue,
+.easy-markstream [data-custom-id='easy-markstream'] .list-item:has(.checkbox-node) > .markstream-vue {
+  overflow: visible !important;
+  contain: none !important;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] li:has(.checkbox-node) .checkbox-node,
+.easy-markstream [data-custom-id='easy-markstream'] .list-item:has(.checkbox-node) .checkbox-node {
+  position: absolute;
+  top: calc(4px + 0.1em);
+  left: -1.5em;
+  z-index: 1;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 1.5em;
+  height: auto;
+  margin: 0 !important;
+  overflow: visible !important;
+}
+
+/* 0.9em；viewBox 略留边防圆贴边被裁；保留 SVG 内置 fill */
+.easy-markstream [data-custom-id='easy-markstream'] li:has(.checkbox-node) .checkbox-icon,
+.easy-markstream [data-custom-id='easy-markstream'] .list-item:has(.checkbox-node) .checkbox-icon {
+  display: block;
+  width: 0.9em;
+  height: 0.9em;
+  overflow: visible;
+  color: unset;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] .ms-mermaid {
+  margin: 0 0 16px;
+}
+
+/* 图片尺寸由 MarkdownImage 自管；此处仅兜底非自定义 img */
+.easy-markstream [data-custom-id='easy-markstream'] img:not(.ms-image__img, .ms-image-lb__img) {
+  box-sizing: content-box;
+  max-width: 100%;
+  background: #fff;
+  border-style: none;
+}
+
+/*
+ * 只去掉末个顶层块自身的底边距，避免纸面底部多出一截。
+ * 不能写成 `.node-slot:last-child .paragraph-node`：流式时末块常是未完成的引用/列表，
+ * 会把块内部段落、标题、代码的间距一并清掉。
+ */
+.easy-markstream [data-custom-id='easy-markstream'] > .node-slot:last-child > .node-content > * {
+  margin-bottom: 0 !important;
+}
