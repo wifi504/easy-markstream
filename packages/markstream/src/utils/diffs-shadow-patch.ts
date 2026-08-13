@@ -7,29 +7,29 @@ const CODE_PAD_RIGHT = 12
 const CODE_FONT_FAMILY = 'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace'
 const DIFFS_STYLE_PATCH_ID = 'easy-markstream-diffs-style-patch'
 
+const HOST_VARS_SET = new WeakSet<HTMLElement>()
+
 export function patchDiffsContainerBg(host: HTMLElement) {
-  host.style.setProperty('--diffs-light-bg', CODE_BLOCK_BG, 'important')
-  host.style.setProperty('--diffs-dark-bg', CODE_BLOCK_BG, 'important')
-  host.style.setProperty('--diffs-gap-block', `${CODE_PAD_Y}px`, 'important')
-  host.style.setProperty('--diffs-gap-fallback', `${CODE_PAD_Y}px`, 'important')
-  host.style.setProperty('--diffs-font-family', CODE_FONT_FAMILY, 'important')
-  host.style.setProperty('--diffs-min-number-column-width', '2ch', 'important')
-  host.style.setProperty('--diffs-min-number-column-width-default', '2ch', 'important')
-  host.style.setProperty('background', CODE_BLOCK_BG, 'important')
-  host.style.setProperty('background-color', CODE_BLOCK_BG, 'important')
-  host.style.setProperty('border-radius', '4px', 'important')
-  host.style.setProperty('margin', '0', 'important')
-
-  const root = host.shadowRoot
-  if (!root) { return }
-
-  let style = root.getElementById(DIFFS_STYLE_PATCH_ID) as HTMLStyleElement | null
-  if (!style) {
-    style = document.createElement('style')
-    style.id = DIFFS_STYLE_PATCH_ID
-    root.appendChild(style)
+  if (!HOST_VARS_SET.has(host)) {
+    HOST_VARS_SET.add(host)
+    host.style.setProperty('--diffs-light-bg', CODE_BLOCK_BG, 'important')
+    host.style.setProperty('--diffs-dark-bg', CODE_BLOCK_BG, 'important')
+    host.style.setProperty('--diffs-gap-block', `${CODE_PAD_Y}px`, 'important')
+    host.style.setProperty('--diffs-gap-fallback', `${CODE_PAD_Y}px`, 'important')
+    host.style.setProperty('--diffs-font-family', CODE_FONT_FAMILY, 'important')
+    host.style.setProperty('--diffs-min-number-column-width', '2ch', 'important')
+    host.style.setProperty('--diffs-min-number-column-width-default', '2ch', 'important')
+    host.style.setProperty('background', CODE_BLOCK_BG, 'important')
+    host.style.setProperty('background-color', CODE_BLOCK_BG, 'important')
+    host.style.setProperty('border-radius', '4px', 'important')
+    host.style.setProperty('margin', '0', 'important')
   }
 
+  const root = host.shadowRoot
+  if (!root || root.getElementById(DIFFS_STYLE_PATCH_ID)) { return }
+
+  const style = document.createElement('style')
+  style.id = DIFFS_STYLE_PATCH_ID
   style.textContent = `
     :host {
       --diffs-light-bg: ${CODE_BLOCK_BG} !important;
@@ -152,6 +152,7 @@ export function patchDiffsContainerBg(host: HTMLElement) {
       background: rgba(9, 105, 218, 0.18);
     }
   `
+  root.appendChild(style)
 }
 
 export function scanAndPatchDiffsContainers(root: ParentNode = document) {

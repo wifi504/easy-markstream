@@ -102,6 +102,7 @@ import {
   watch,
 } from 'vue'
 import { findStreamPaper, hasRenderedContentAfter } from '../utils/code-fence-util'
+import { bindCodeBlockHScroll } from '../utils/code-hscroll-util'
 import CodeBracketIcon from './CodeBracketIcon.vue'
 import HoverPopover from './HoverPopover.vue'
 import IncrementalCodePre from './IncrementalCodePre.vue'
@@ -153,14 +154,22 @@ const blockLoading = computed(() => {
 const canCopy = computed(() => props.showCopyButton && !blockLoading.value)
 
 /**
- * CodeBlockNode.no() 优先读 node.loading；
- * 引用块粘住 loading 时必须覆写，否则 Monaco 永不启动。
+ * 闭合后冻结 node，避免后续整篇流式重解析把 CodeBlockNode / diffs 整棵重绘
+ * （否则虚拟条绑的是已卸节点，split 横滑会被瞬间掰回开头）。
  */
-const renderNode = computed(() => {
+const closedNode = ref<Record<string, any> | null>(null)
+
+function snapshotClosedNode() {
   const node = props.node
-  if (!node) { return node }
-  if (!blockLoading.value && node.loading) { return { ...node, loading: false } }
-  return node
+  if (!node) { return }
+  closedNode.value = { ...node, loading: false }
+}
+
+const renderNode = computed(() => {
+  if (!blockLoading.value) {
+    return closedNode.value ?? (props.node ? { ...props.node, loading: false } : props.node)
+  }
+  return props.node
 })
 
 watch(
@@ -170,8 +179,26 @@ watch(
   },
 )
 
+function scheduleClosedHScroll() {
+  const el = rootRef.value
+  if (el) { bindCodeBlockHScroll(el) }
+}
+
+watch(blockLoading, (loading) => {
+  if (loading) {
+    closedNode.value = null
+    return
+  }
+  snapshotClosedNode()
+  nextTick(scheduleClosedHScroll)
+}, { flush: 'post' })
+
 onMounted(() => {
   refreshFollowedByContent()
+  if (!blockLoading.value) {
+    snapshotClosedNode()
+    nextTick(scheduleClosedHScroll)
+  }
   const paper = findStreamPaper(rootRef.value)
   if (paper && typeof MutationObserver !== 'undefined') {
     paperObserver = new MutationObserver(() => {
@@ -204,6 +231,9 @@ const LANG_LABELS: Record<string, string> = {
   plaintext: 'Plain Text',
   text: 'Plain Text',
   txt: 'Plain Text',
+  diff: 'Differences',
+  patch: 'Differences',
+  udiff: 'Differences',
 }
 
 const copied = ref(false)
@@ -211,9 +241,20 @@ let copiedTimer: ReturnType<typeof setTimeout> | null = null
 
 const languageRaw = computed(() => String(props.node?.language ?? '').trim())
 
+function looksLikeDiff(code: string) {
+  const lines = code.split('\n').filter(line => line.length > 0)
+  if (!lines.length) { return false }
+  if (/^(diff --git |--- |\+\+\+ |@@ )/.test(lines[0])) { return true }
+  return lines.some(line => line.startsWith('+')) && lines.some(line => line.startsWith('-'))
+}
+
 const languageLabel = computed(() => {
+  if (props.node?.diff) { return LANG_LABELS.diff }
   const raw = languageRaw.value.toLowerCase()
-  if (!raw) { return LANG_LABELS.plaintext }
+  if (!raw || raw === 'plaintext' || raw === 'text' || raw === 'txt') {
+    if (looksLikeDiff(String(props.node?.raw ?? props.node?.code ?? ''))) { return LANG_LABELS.diff }
+    return LANG_LABELS.plaintext
+  }
   if (LANG_LABELS[raw]) { return LANG_LABELS[raw] }
   return raw.charAt(0).toUpperCase() + raw.slice(1)
 })

@@ -152,6 +152,11 @@ onBeforeUnmount(() => {
   margin-top: 16px;
 }
 
+.ms-sources :deep(.hover-popover),
+.ms-sources__trigger {
+  cursor: pointer;
+}
+
 .ms-sources__trigger {
   display: inline-flex;
   gap: 6px;
@@ -160,7 +165,6 @@ onBeforeUnmount(() => {
   font: inherit;
   font-size: 13px;
   line-height: 20px;
-  cursor: default;
 }
 
 .ms-sources__trigger:hover {

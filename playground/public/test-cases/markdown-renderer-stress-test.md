@@ -13,6 +13,7 @@
 - 引用嵌套
 - 数学公式渲染
 - 代码高亮
+- Diff 代码对比
 - Mermaid 图表
 - HTML 混合
 - 脚注
@@ -286,6 +287,65 @@ public class HelloWorld {
         System.out.println("Hello, World! This is a very long line of code designed to demonstrate what an extremely long Java statement looks like when someone writes unnecessarily verbose code: " + "Java is a powerful, object-oriented programming language that runs on the Java Virtual Machine (JVM), allowing developers to write once and run anywhere across different operating systems and hardware platforms, and this sentence keeps getting longer and longer just to make this single line ridiculously huge for testing editors, formatters, syntax highlighters, code wrapping behavior, horizontal scrolling performance, and IDE rendering capabilities. " + "The quick brown fox jumps over the lazy dog while the compiler patiently waits for the next token to arrive because this line contains an absurd amount of string concatenation that no professional developer would normally write in production code unless they were intentionally testing something.");
     }
 }
+```
+
+## Diff
+
+简易增删：
+
+```diff
+- const name = 'old'
++ const name = 'EasyMarkstream'
+```
+
+unified diff（含文件头与 hunk）：
+
+```diff
+--- a/src/greet.ts
++++ b/src/greet.ts
+@@ -1,8 +1,11 @@
+ export function greet(name: string) {
+-  return 'hello ' + name
++  const message = `hello ${name}`
++  return message
+ }
+
+-export const VERSION = '0.0.1'
++export const VERSION = '0.1.0'
++
++export function shout(name: string) {
++  return greet(name).toUpperCase()
++}
+```
+
+多文件补丁：
+
+```diff
+diff --git a/package.json b/package.json
+--- a/package.json
++++ b/package.json
+@@ -1,6 +1,7 @@
+ {
+   "name": "@ezview/markstream",
+-  "version": "0.0.1",
++  "version": "0.1.0",
++  "description": "Vue 3 streaming markdown",
+   "type": "module"
+ }
+
+diff --git a/src/index.ts b/src/index.ts
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -1,3 +1,4 @@
++export { greet, shout } from './greet'
+ export { default } from './EasyMarkstream.vue'
+```
+
+超长 diff 行（横滑）：
+
+```diff
+- const line = "this is an extremely long deleted line meant to stress horizontal scrolling inside a diff pane, with enough filler text that the renderer must keep gutter, highlight, and scroll geometry aligned: " + "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
++ const line = "this is an extremely long added line meant to stress horizontal scrolling inside a diff pane, with enough filler text that the renderer must keep gutter, highlight, and scroll geometry aligned: " + "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
 ```
 
 ---

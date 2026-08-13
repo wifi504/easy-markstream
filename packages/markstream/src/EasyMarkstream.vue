@@ -281,9 +281,7 @@ onMounted(() => {
   const root = rootRef.value
   if (!root) { return }
   if (!props.plainText) {
-    diffsBgObserver = createDiffsBgObserver(root, () => {
-      scanAndBindCodeHScroll(document)
-    })
+    diffsBgObserver = createDiffsBgObserver(root)
     refreshEnhancements(root)
   } else {
     syncPlainTextDom(plainTextContent.value)

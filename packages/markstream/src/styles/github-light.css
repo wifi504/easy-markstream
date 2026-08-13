@@ -417,12 +417,24 @@
 
   height: auto !important;
   max-height: none !important;
-  overflow: auto hidden !important;
   background: #f6f8fa !important;
   background-color: #f6f8fa !important;
   border: 0 !important;
   border-radius: 4px !important;
   scrollbar-width: none !important;
+}
+
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container .stream-diffs-shell,
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container .stream-diffs-surface,
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container .code-editor-container,
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container .code-editor-layer,
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container .code-block-shell-content {
+  overflow: auto hidden !important;
+}
+
+/* 横滑只发生在 shadow 内的 [data-code]，宿主本身不滚 */
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container diffs-container {
+  overflow: hidden !important;
 }
 
 /*
