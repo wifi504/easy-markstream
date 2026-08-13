@@ -54,6 +54,29 @@ pnpm build        # 构建 @ezview/markstream
 pnpm lint:all
 ```
 
+## 发版
+
+- **CI**：PR 和推 `main` 时跑 lint / type-check / build
+- **文档站**：推 `main` 时由 GitHub Pages workflow 部署
+- **npm**：只在推 `v*` tag 时发布 `@ezview/markstream`
+
+在 `main` 上把 `packages/markstream/package.json` 的 `version` 改成目标版本并提交，然后：
+
+```bash
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+tag 必须与包版本一致（`v0.1.0` → `0.1.0`）。
+
+npm 包设置里配置 **Trusted Publisher**：GitHub 仓库 `wifi504/easy-markstream`，workflow 文件名 `publish.yml`。第一次发 `0.1.0` 可先本地执行：
+
+```bash
+pnpm --filter @ezview/markstream publish --access public
+```
+
+之后在 npm 绑定 Trusted Publisher，后续发版走 tag 即可。
+
 ## License
 
-MIT
+MIT。本包依赖 [markstream-vue](https://github.com/Simon-He95/markstream-vue)，Copyright (c) 2022 Simon He，MIT。

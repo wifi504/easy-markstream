@@ -25,3 +25,7 @@ import EasyMarkstream from '@ezview/markstream'
 ```
 
 组件会自行引入 `markstream-vue` 与 KaTeX 的 CSS，不必再写 `import '@ezview/markstream/style.css'`。若宿主已有 KaTeX，请保证全局只保留一份样式。
+
+## License
+
+MIT。本包依赖 [markstream-vue](https://github.com/Simon-He95/markstream-vue)，Copyright (c) 2022 Simon He，MIT。

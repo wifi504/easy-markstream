@@ -39,11 +39,13 @@
     "dist"
   ],
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "scripts": {
     "build": "vite build",
-    "type-check": "vue-tsc --noEmit -p tsconfig.json"
+    "type-check": "vue-tsc --noEmit -p tsconfig.json",
+    "prepublishOnly": "pnpm type-check && pnpm build"
   },
   "peerDependencies": {
     "vue": "^3.3.0"

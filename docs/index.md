@@ -19,3 +19,7 @@ import EasyMarkstream from '@ezview/markstream'
 ```
 
 完整流式压力测试请在仓库里跑 `pnpm dev`（playground）。
+
+## License
+
+MIT。本包依赖 [markstream-vue](https://github.com/Simon-He95/markstream-vue)，Copyright (c) 2022 Simon He，MIT。
