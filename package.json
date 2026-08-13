@@ -19,7 +19,8 @@
     "lint:css": "stylelint \"**/*.{css,vue,html}\"",
     "lint:css:fix": "stylelint \"**/*.{css,vue,html}\" --fix",
     "lint:all": "pnpm lint:js && pnpm lint:css",
-    "lint:all:fix": "pnpm lint:js:fix && pnpm lint:css:fix"
+    "lint:all:fix": "pnpm lint:js:fix && pnpm lint:css:fix",
+    "publish:only": "pnpm --filter @ezview/markstream publish --access public --no-git-checks --no-provenance --registry=https://registry.npmjs.org"
   },
   "devDependencies": {
     "@ezview/eslint-config": "^1.0.0",

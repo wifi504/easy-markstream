@@ -69,10 +69,10 @@ git push origin v0.1.0
 
 tag 必须与包版本一致（`v0.1.0` → `0.1.0`）。
 
-npm 包设置里配置 **Trusted Publisher**：GitHub 仓库 `wifi504/easy-markstream`，workflow 文件名 `publish.yml`。第一次发 `0.1.0` 可先本地执行：
+npm 包设置里配置 **Trusted Publisher**：GitHub 仓库 `wifi504/easy-markstream`，workflow 文件名 `publish.yml`。第一次发 `0.1.0` 在仓库根目录执行（强制官方源，避开镜像）：
 
 ```bash
-pnpm --filter @ezview/markstream publish --access public
+pnpm publish:only
 ```
 
 之后在 npm 绑定 Trusted Publisher，后续发版走 tag 即可。
