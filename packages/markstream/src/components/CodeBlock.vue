@@ -244,7 +244,7 @@ const languageRaw = computed(() => String(props.node?.language ?? '').trim())
 function looksLikeDiff(code: string) {
   const lines = code.split('\n').filter(line => line.length > 0)
   if (!lines.length) { return false }
-  if (/^(diff --git |--- |\+\+\+ |@@ )/.test(lines[0])) { return true }
+  if (/^(?:diff --git |--- |\+\+\+ |@@ )/.test(lines[0])) { return true }
   return lines.some(line => line.startsWith('+')) && lines.some(line => line.startsWith('-'))
 }
 

@@ -29,7 +29,7 @@
 <script setup lang="ts">
 import EasyMarkstream from '@ezview/markstream'
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-// @ts-ignore Vite raw import
+// @ts-expect-error Vite raw import
 import SAMPLE from '../.vitepress/demo-sample.md?raw'
 
 const TICK_MS = 50
@@ -132,8 +132,8 @@ onBeforeUnmount(() => {
 .demo-preview {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: 12px;
+  align-items: flex-start;
 }
 
 .demo-preview__play {
