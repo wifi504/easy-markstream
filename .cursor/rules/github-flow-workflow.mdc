@@ -16,9 +16,9 @@ alwaysApply: true
 
 确认话术示例：
 
-> 本次按 **feat** 流程：从 `main` 签出 `feat/xxx`，开 PR 合回 `main`。分支名是否 OK？
+> 本次按 **feat** 流程：从 `main` 签出 `feat/xxx`，push 后你在 GitHub 页面开 PR 合回 `main`。分支名是否 OK？
 >
-> 本次按 **fix** 流程：从 `main` 签出 `fix/xxx`，开 PR 合回 `main`。分支名是否 OK？
+> 本次按 **fix** 流程：从 `main` 签出 `fix/xxx`，push 后你在 GitHub 页面开 PR 合回 `main`。分支名是否 OK？
 
 未确认前不要建分支、改代码或提交。
 
@@ -33,7 +33,9 @@ alwaysApply: true
 | 文档 | `main` | `docs/xxx` | PR → `main` |
 
 - 通过 **Pull Request 合回 `main`**，不本地直推 `main`
-- npm 发版从 `main` 打 tag
+- **开 PR、合并 PR 由用户在 GitHub 页面自行完成**。Agent 只 commit + push 功能分支，禁止 `gh pr create` / `gh pr merge` / 代开网页 PR
+- 用户合并后若要求发版：Agent `pull` `main`，打并推送 `v*` tag（npm 只走 tag）
+- 分支 push 后给出 compare 链接，方便用户开 PR
 
 ## Commit 规范
 
