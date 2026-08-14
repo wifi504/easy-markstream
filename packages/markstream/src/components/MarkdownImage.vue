@@ -169,7 +169,7 @@ watch(
 }
 
 .ms-image.is-pending {
-  min-height: 8rem;
+  min-height: 128px;
 }
 
 .ms-image__img {
@@ -216,7 +216,7 @@ watch(
 .ms-image__skeleton {
   display: block;
   width: 100%;
-  min-height: 8rem;
+  min-height: 128px;
   overflow: hidden;
   background: #f6f8fa;
 }
@@ -225,7 +225,7 @@ watch(
   display: block;
   width: 100%;
   height: 100%;
-  min-height: 8rem;
+  min-height: 128px;
   background: linear-gradient(
     90deg,
     #f6f8fa 0%,
@@ -238,12 +238,12 @@ watch(
 
 .ms-image__error {
   display: inline-flex;
-  gap: 0.5rem;
+  gap: 8px;
   align-items: center;
   justify-content: center;
   max-width: 100%;
-  min-height: 4rem;
-  padding: 1rem 1.5rem;
+  min-height: 64px;
+  padding: 16px 24px;
   color: #59636e;
   font-size: 14px;
   vertical-align: middle;

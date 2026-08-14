@@ -1,5 +1,49 @@
 /* GitHub 浅色主题：挂在 .easy-markstream / data-custom-id=easy-markstream 下 */
 
+/*
+ * 排版隔离墙：钉死可继承属性，避免宿主 html/body 的字号、行高、字体渗入。
+ * Playground 几乎无全局排版，产品页通常有，不钉根节点就会「变成别的网页的效果」。
+ * Teleport 浮层挂到 body，吃不到这里的继承，见文件末尾单独钉字体。
+ */
+.easy-markstream {
+  --ms-font-sans: -apple-system, blinkmacsystemfont, 'Segoe UI', 'Noto Sans', helvetica, arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  --ms-font-mono: ui-monospace, sfmono-regular, 'SF Mono', menlo, consolas, 'Liberation Mono',
+    monospace;
+  --ms-text-body: 16px;
+  --ms-leading-body: 24px;
+
+  position: relative;
+  box-sizing: border-box;
+  color: #1f2328;
+  font-weight: 400;
+  font-size: 16px;
+  font-family: var(--ms-font-sans);
+  font-style: normal;
+  font-variant: normal;
+  line-height: 24px;
+  letter-spacing: normal;
+  white-space: normal;
+  text-align: start;
+  text-transform: none;
+  text-decoration: none;
+  text-indent: 0;
+  text-shadow: none;
+  word-break: normal;
+  word-spacing: normal;
+  overflow-wrap: break-word;
+  tab-size: 4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 与 playground 全局 * { box-sizing: border-box } 对齐；行号槽仍用 content-box !important */
+.easy-markstream *,
+.easy-markstream *::before,
+.easy-markstream *::after {
+  box-sizing: border-box;
+}
+
 .easy-markstream::selection,
 .easy-markstream *::selection {
   color: inherit;
@@ -84,7 +128,7 @@
 .easy-markstream [data-custom-id='easy-markstream'] .heading-1,
 .easy-markstream [data-custom-id='easy-markstream'] h1.heading-node,
 .easy-markstream [data-custom-id='easy-markstream'] h1 {
-  padding: 0 0 0.3em !important;
+  padding: 0 0 10px !important;
   font-size: 32px;
   border-bottom: 1px solid #d1d9e0b3;
 }
@@ -92,7 +136,7 @@
 .easy-markstream [data-custom-id='easy-markstream'] .heading-2,
 .easy-markstream [data-custom-id='easy-markstream'] h2.heading-node,
 .easy-markstream [data-custom-id='easy-markstream'] h2 {
-  padding: 0 0 0.3em !important;
+  padding: 0 0 7px !important;
   font-size: 24px;
   border-bottom: 1px solid #d1d9e0b3;
 }
@@ -163,8 +207,8 @@
   position: static !important;
   top: auto !important;
   bottom: auto !important;
-  font-size: 0.75em;
-  vertical-align: 0.2em;
+  font-size: 12px;
+  vertical-align: 2px;
 }
 
 .easy-markstream [data-custom-id='easy-markstream'] .subscript-node,
@@ -172,8 +216,8 @@
   position: static !important;
   top: auto !important;
   bottom: auto !important;
-  font-size: 0.75em;
-  vertical-align: -0.15em;
+  font-size: 12px;
+  vertical-align: -2px;
 }
 
 .easy-markstream [data-custom-id='easy-markstream'] a,
@@ -196,8 +240,8 @@
 
 .easy-markstream [data-custom-id='easy-markstream'] .inline-code,
 .easy-markstream [data-custom-id='easy-markstream'] code:not(.markstream-pre__code) {
-  padding: 0.2em 0.4em;
-  font-size: 85%;
+  padding: 3px 6px;
+  font-size: 13.6px;
   font-family: var(--ms-font-mono);
   background: rgb(175 184 193 / 20%);
   border-radius: 6px;
@@ -353,9 +397,9 @@
   /* 行号槽已由 pre padding-left 承担；勿再给 code 加 padding（会双倍偏移） */
   padding-left: 0 !important;
   overflow: auto hidden !important;
-  font-size: inherit;
-  font-family: inherit;
-  line-height: inherit;
+  font-size: 13px;
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  line-height: 18px;
   white-space: pre;
   background: transparent;
   scrollbar-width: none !important;
@@ -573,7 +617,7 @@
 .easy-markstream [data-custom-id='easy-markstream'] .list-node {
   margin-top: 0;
   margin-bottom: 16px;
-  padding-left: 1.5em !important;
+  padding-left: 24px !important;
   color: #1f2328;
   font-weight: 400;
   font-size: 16px;
@@ -607,9 +651,9 @@
 .easy-markstream [data-custom-id='easy-markstream'] li > .paragraph-node,
 .easy-markstream [data-custom-id='easy-markstream'] li > p {
   margin: 0 !important;
-  font-weight: inherit;
-  font-size: inherit;
-  line-height: inherit;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
 }
 
 /*
@@ -656,7 +700,7 @@
 }
 
 /*
- * 任务列表：布局完全跟 ul.list-disc（padding-left:1.5em + outside 槽），
+ * 任务列表：布局完全跟 ul.list-disc（padding-left:24px + outside 槽），
  * 只把圆点换成自定义 checkbox。嵌套 .markstream-vue 的 contain:paint 会裁切
  * 槽外绘制，故关掉 contain，把图标绝对定位进 ul 左槽。
  */
@@ -685,25 +729,25 @@
 .easy-markstream [data-custom-id='easy-markstream'] li:has(.checkbox-node) .checkbox-node,
 .easy-markstream [data-custom-id='easy-markstream'] .list-item:has(.checkbox-node) .checkbox-node {
   position: absolute;
-  top: calc(4px + 0.1em);
-  left: -1.5em;
+  top: 6px;
+  left: -24px;
   z-index: 1;
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  width: 1.5em;
+  width: 24px;
   height: auto;
   margin: 0 !important;
   overflow: visible !important;
 }
 
-/* 0.9em；viewBox 略留边防圆贴边被裁；保留 SVG 内置 fill */
+/* 14px；viewBox 略留边防圆贴边被裁；保留 SVG 内置 fill */
 .easy-markstream [data-custom-id='easy-markstream'] li:has(.checkbox-node) .checkbox-icon,
 .easy-markstream [data-custom-id='easy-markstream'] .list-item:has(.checkbox-node) .checkbox-icon {
   display: block;
-  width: 0.9em;
-  height: 0.9em;
+  width: 14px;
+  height: 14px;
   overflow: visible;
   color: unset;
 }
@@ -727,4 +771,22 @@
  */
 .easy-markstream [data-custom-id='easy-markstream'] > .node-slot:last-child > .node-content > * {
   margin-bottom: 0 !important;
+}
+
+/*
+ * Teleport 到 body 的浮层吃不到 .easy-markstream 继承，单独钉字体。
+ * 字号仍由各组件 scoped 样式负责。
+ */
+.ms-md-link__bubble,
+.hover-popover__tip,
+.ms-image-lb {
+  font-family: -apple-system, blinkmacsystemfont, 'Segoe UI', 'Noto Sans', helvetica, arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  letter-spacing: normal;
+  word-spacing: normal;
+}
+
+.ms-image-lb {
+  font-size: 12px;
+  line-height: 18px;
 }

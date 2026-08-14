@@ -243,10 +243,13 @@ onBeforeUnmount(() => {
 
 .ms-sources__panel :deep(.easy-markstream) {
   margin: 0;
+  font-size: 13px;
+  line-height: 20px;
 }
 
 .ms-sources__panel :deep(.easy-markstream > .markstream-vue) {
   font-size: 13px;
+  line-height: 20px;
 }
 
 .ms-sources__panel :deep(ul) {
