@@ -2,6 +2,24 @@
   <div class="stream-demo">
     <header class="stream-demo__bar">
       <strong>@ezview/markstream 渲染能力测试</strong>
+
+      <label class="stream-demo__field">
+        <span>用例：</span>
+        <select
+          v-model="selectedCaseId"
+          class="stream-demo__select"
+          @change="onTestCaseChange"
+        >
+          <option
+            v-for="item in testCases"
+            :key="item.id"
+            :value="item.id"
+          >
+            {{ item.label }}
+          </option>
+        </select>
+      </label>
+
       <span v-if="error" class="stream-demo__meta">失败：{{ error }}</span>
 
       <label class="stream-demo__field">
@@ -78,8 +96,27 @@
 import EasyMarkstream from '@ezview/markstream'
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
-/** public/test-cases 下的压力测试文档（模拟 SSE 源） */
-const DOC_URL = '/test-cases/markdown-renderer-stress-test.md'
+interface PlaygroundTestCase {
+  id: string
+  label: string
+  url: string
+}
+
+/** public/test-cases 下的文档（模拟 SSE 源） */
+const testCases: PlaygroundTestCase[] = [
+  {
+    id: 'stress',
+    label: '渲染压力测试',
+    url: '/test-cases/markdown-renderer-stress-test.md',
+  },
+  {
+    id: 'tea-market',
+    label: '袋泡茶市场体量分析',
+    url: '/test-cases/tea-bags-market-us-canada.md',
+  },
+]
+
+const selectedCaseId = ref(testCases[0].id)
 
 /** 模拟 chunk 到达的 tick（ms）；可见节奏交给 markstream smooth-streaming */
 const TICK_MS = 50
@@ -213,13 +250,34 @@ function pump() {
   timer = setTimeout(pump, TICK_MS)
 }
 
+function currentCaseUrl() {
+  return testCases.find(item => item.id === selectedCaseId.value)?.url
+    ?? testCases[0].url
+}
+
 async function loadSource() {
-  if (!rawDoc.value) {
-    const res = await fetch(DOC_URL)
-    if (!res.ok) { throw new Error(`HTTP ${res.status}`) }
-    rawDoc.value = await res.text()
-  }
+  const res = await fetch(currentCaseUrl())
+  if (!res.ok) { throw new Error(`HTTP ${res.status}`) }
+  rawDoc.value = await res.text()
   applyLoops()
+}
+
+async function onTestCaseChange() {
+  clearTimer()
+  streaming.value = false
+  error.value = ''
+  tokenCarry = 0
+  try {
+    await loadSource()
+    seekTo(0)
+  } catch (e) {
+    rawDoc.value = ''
+    source.value = ''
+    content.value = ''
+    tokenPos.value = 0
+    isDone.value = false
+    error.value = e instanceof Error ? e.message : String(e)
+  }
 }
 
 async function startStream() {
@@ -320,13 +378,24 @@ onBeforeUnmount(() => {
   font-size: 13px;
 }
 
-.stream-demo__field input[type='number'] {
+.stream-demo__field input[type='number'],
+.stream-demo__select {
   box-sizing: border-box;
-  width: 88px;
   height: 32px;
   padding: 0 8px;
+  font: inherit;
+  background: #fff;
   border: 1px solid #d1d5db;
   border-radius: 6px;
+}
+
+.stream-demo__field input[type='number'] {
+  width: 88px;
+}
+
+.stream-demo__select {
+  max-width: 220px;
+  cursor: pointer;
 }
 
 .stream-demo__switch {

@@ -14,6 +14,8 @@ export default defineConfig({
     dedupe: ['vue'],
   },
   server: {
+    port: 5200,
+    strictPort: true,
     fs: {
       allow: [resolve(root, '..')],
     },
