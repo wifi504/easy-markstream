@@ -329,13 +329,18 @@ onBeforeUnmount(() => {
 .easy-markstream.is-plain-text {
   color: #1f2328;
   font-size: 16px;
-  line-height: 1.6;
+  font-family: var(--ms-font-sans);
+  line-height: 26px;
   overflow-wrap: break-word;
 }
 
 /* 真换行用 <br>；压过主题 p 的底边距 */
 .easy-markstream.is-plain-text .easy-markstream__plain-p {
   margin: 0 !important;
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
   white-space: pre-wrap;
 }
 

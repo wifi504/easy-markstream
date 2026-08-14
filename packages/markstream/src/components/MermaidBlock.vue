@@ -574,7 +574,7 @@ onBeforeUnmount(() => {
   justify-content: center;
 
   /* 保持原先「预览 / 源码」两字宽度 */
-  min-width: 2em;
+  min-width: 24px;
   height: 22px;
   padding: 2px 10px;
   color: #59636e;

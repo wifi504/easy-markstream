@@ -445,7 +445,7 @@ onBeforeUnmount(() => {
 
 .ms-image-lb__zoom {
   box-sizing: border-box;
-  min-width: 4.5em;
+  min-width: 54px;
   height: 28px;
   padding: 0 4px;
   color: inherit;
