@@ -1,7 +1,7 @@
 {
   "name": "@ezview/markstream",
   "type": "module",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Vue 3 开箱即用的流式 Markdown 渲染组件，基于 markstream-vue，内置 GitHub 浅色观感、Mermaid、KaTeX、代码块高亮。",
   "author": "ezview",
   "license": "MIT",
