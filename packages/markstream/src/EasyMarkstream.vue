@@ -29,7 +29,6 @@
       :code-block-props="codeBlockProps"
       :code-block-monaco-options="codeBlockMonacoOptions"
       :mermaid-props="mermaidProps as any"
-      v-bind="final ? {} : { maxLiveNodes: 0 }"
     />
     <span
       v-show="cursorEnabled"
