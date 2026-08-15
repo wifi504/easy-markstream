@@ -204,7 +204,66 @@ let persistedPlainText = ''
 const cursorDocked = ref(false)
 const cursorStyle = ref<CSSProperties>({ visibility: 'hidden' })
 let diffsBgObserver: MutationObserver | undefined
+let cvObserver: IntersectionObserver | undefined
 let cursorFrame = 0
+
+function nearestScrollRoot(el: HTMLElement): Element | null {
+  let parent = el.parentElement
+  while (parent && parent !== document.body) {
+    const overflowY = getComputedStyle(parent).overflowY
+    if (overflowY === 'auto' || overflowY === 'scroll' || overflowY === 'overlay') {
+      return parent
+    }
+    parent = parent.parentElement
+  }
+  return null
+}
+
+function syncOffscreenContentVisibility(root: HTMLElement) {
+  cvObserver?.disconnect()
+  cvObserver = undefined
+  root.querySelectorAll('.is-cv-skip').forEach((node) => {
+    node.classList.remove('is-cv-skip')
+  })
+  if (!props.final || props.plainText || typeof IntersectionObserver === 'undefined') {
+    return
+  }
+  const slots = [...root.querySelectorAll(':scope > [data-custom-id="easy-markstream"] > .node-slot')] as HTMLElement[]
+  if (!slots.length) { return }
+
+  const seen = new WeakSet<Element>()
+
+  function rememberSlotSize(slot: HTMLElement) {
+    const height = Math.round(slot.getBoundingClientRect().height)
+    if (height > 0) {
+      slot.style.setProperty('contain-intrinsic-size', `auto ${height}px`)
+    }
+  }
+
+  cvObserver = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      const slot = entry.target as HTMLElement
+      if (!seen.has(slot)) {
+        seen.add(slot)
+        rememberSlotSize(slot)
+        continue
+      }
+      if (entry.isIntersecting) {
+        slot.classList.remove('is-cv-skip')
+      } else {
+        rememberSlotSize(slot)
+        slot.classList.add('is-cv-skip')
+      }
+    }
+  }, {
+    root: nearestScrollRoot(root),
+    rootMargin: '400px 0px',
+  })
+  for (const slot of slots) {
+    rememberSlotSize(slot)
+    cvObserver.observe(slot)
+  }
+}
 
 function syncPlainTextDom(next: string) {
   const el = plainPRef.value
@@ -282,6 +341,7 @@ onMounted(() => {
   if (!props.plainText) {
     diffsBgObserver = createDiffsBgObserver(root)
     refreshEnhancements(root)
+    syncOffscreenContentVisibility(root)
   } else {
     syncPlainTextDom(plainTextContent.value)
   }
@@ -292,7 +352,10 @@ watch(
   () => `${props.content.length}:${props.final}:${nodes.value.length}:${String(props.typewriter)}:${props.plainText}:${plainParagraphs.value.length}`,
   async () => {
     await nextTick()
-    if (rootRef.value) { refreshEnhancements(rootRef.value) }
+    if (rootRef.value) {
+      refreshEnhancements(rootRef.value)
+      syncOffscreenContentVisibility(rootRef.value)
+    }
     scheduleRepositionCursor()
   },
   { flush: 'post' },
@@ -314,6 +377,8 @@ watch(
 onBeforeUnmount(() => {
   diffsBgObserver?.disconnect()
   diffsBgObserver = undefined
+  cvObserver?.disconnect()
+  cvObserver = undefined
   if (cursorFrame) { cancelAnimationFrame(cursorFrame) }
 })
 </script>

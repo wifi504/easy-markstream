@@ -1,12 +1,16 @@
 <template>
-  <div ref="rootRef" class="ms-code-block" :class="{ 'is-streaming': blockLoading }">
+  <div
+    ref="rootRef"
+    class="ms-code-block"
+    :class="{ 'is-streaming': blockLoading }"
+  >
     <!--
       未闭合：增量 Pre（保选区）。
       闭合后的 CodeBlockNode 在流式期也保持挂载（v-show），
       避免晚挂载一直卡在 viewport-pending、Monaco 不启动。
     -->
     <div
-      v-show="blockLoading"
+      v-show="blockLoading || awaitingClosedDiffs"
       class="code-block-container rounded-lg border is-rendering"
       data-markstream-code-block="1"
       data-markstream-code-block-state="streaming"
@@ -35,7 +39,7 @@
     </div>
 
     <code-block-node
-      v-show="!blockLoading"
+      v-show="!blockLoading && !awaitingClosedDiffs"
       :node="(renderNode as any)"
       :loading="blockLoading"
       :stream="stream"
@@ -103,6 +107,7 @@ import {
 } from 'vue'
 import { findStreamPaper, hasRenderedContentAfter } from '../utils/code-fence-util'
 import { bindCodeBlockHScroll } from '../utils/code-hscroll-util'
+import { scanAndPatchDiffsContainers } from '../utils/diffs-shadow-patch'
 import CodeBracketIcon from './CodeBracketIcon.vue'
 import HoverPopover from './HoverPopover.vue'
 import IncrementalCodePre from './IncrementalCodePre.vue'
@@ -130,8 +135,11 @@ const props = withDefaults(defineProps<{
 const rootRef = ref<HTMLElement | null>(null)
 /** 后续节点已渲染 ⇒ fence 实际已闭合（修复引用块内 loading 粘住） */
 const followedByContent = ref(false)
+/** 仅流式闭合：Pre 盖到 diffs shadow 补丁完成，避免露出原皮；静态首屏不走这条 */
+const awaitingClosedDiffs = ref(false)
 
 let paperObserver: MutationObserver | null = null
+let diffsReadyObserver: MutationObserver | null = null
 
 function refreshFollowedByContent() {
   followedByContent.value = hasRenderedContentAfter(rootRef.value)
@@ -184,13 +192,69 @@ function scheduleClosedHScroll() {
   if (el) { bindCodeBlockHScroll(el) }
 }
 
+function isDiffFence() {
+  if (props.node?.diff) { return true }
+  const raw = String(props.node?.language ?? '').trim().toLowerCase()
+  return raw === 'diff' || raw === 'patch' || raw === 'udiff'
+}
+
+function stopDiffsReadyObserver() {
+  diffsReadyObserver?.disconnect()
+  diffsReadyObserver = null
+}
+
+function closedDiffsReady() {
+  const el = rootRef.value
+  if (!el) { return false }
+  const hosts = [...el.querySelectorAll('diffs-container')] as HTMLElement[]
+  const attached = hosts.filter(h => document.documentElement.contains(h))
+  if (!attached.length) { return false }
+  return attached.every(h => !!h.shadowRoot?.getElementById('easy-markstream-diffs-style-patch'))
+}
+
+function tryReleaseClosedDiffs() {
+  if (!awaitingClosedDiffs.value) { return }
+  const el = rootRef.value
+  if (el) { scanAndPatchDiffsContainers(el) }
+  if (!closedDiffsReady()) { return }
+  awaitingClosedDiffs.value = false
+  stopDiffsReadyObserver()
+  scheduleClosedHScroll()
+}
+
+function startDiffsReadyObserver() {
+  stopDiffsReadyObserver()
+  const el = rootRef.value
+  if (!el || typeof MutationObserver === 'undefined') {
+    awaitingClosedDiffs.value = false
+    return
+  }
+  tryReleaseClosedDiffs()
+  if (!awaitingClosedDiffs.value) { return }
+  diffsReadyObserver = new MutationObserver(() => {
+    tryReleaseClosedDiffs()
+  })
+  diffsReadyObserver.observe(el, { childList: true, subtree: true })
+}
+
 watch(blockLoading, (loading) => {
   if (loading) {
     closedNode.value = null
+    awaitingClosedDiffs.value = false
+    stopDiffsReadyObserver()
     return
   }
   snapshotClosedNode()
-  nextTick(scheduleClosedHScroll)
+  if (isDiffFence()) {
+    awaitingClosedDiffs.value = true
+  }
+  nextTick(() => {
+    if (awaitingClosedDiffs.value) {
+      startDiffsReadyObserver()
+    } else {
+      scheduleClosedHScroll()
+    }
+  })
 }, { flush: 'post' })
 
 onMounted(() => {
@@ -303,6 +367,7 @@ onBeforeUnmount(() => {
   }
   paperObserver?.disconnect()
   paperObserver = null
+  stopDiffsReadyObserver()
 })
 </script>
 

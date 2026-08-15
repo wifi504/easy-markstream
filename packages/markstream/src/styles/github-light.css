@@ -481,6 +481,11 @@
   overflow: hidden !important;
 }
 
+/* CodeBlockNode 闭合前会先画出 split-pane 降级面，盖住才是 diffs-container */
+.easy-markstream [data-custom-id='easy-markstream'] .code-block-container.is-diff .markstream-pre--diff-preview {
+  display: none !important;
+}
+
 /*
  * 表格：内容多宽 wrapper 多宽，loading 遮罩才能相对表格居中
  * markstream 默认 scrollbar-gutter:stable 会在窄表右侧多留 ~15px，看起来像错位
@@ -773,15 +778,15 @@
   margin-bottom: 0 !important;
 }
 
-/* final 后跳过屏外顶层块的绘制，高度仍在；流式中不开 */
-.easy-markstream.is-final > [data-custom-id='easy-markstream'] > .node-slot {
+/* final 后只跳过屏外顶层块；首屏先完整布局，再由 IO 给屏外块加 is-cv-skip */
+.easy-markstream.is-final > [data-custom-id='easy-markstream'] > .node-slot.is-cv-skip {
   content-visibility: auto;
   contain-intrinsic-size: 48px;
   contain-intrinsic-size: auto 48px;
 }
 
 @media print {
-  .easy-markstream.is-final > [data-custom-id='easy-markstream'] > .node-slot {
+  .easy-markstream.is-final > [data-custom-id='easy-markstream'] > .node-slot.is-cv-skip {
     content-visibility: visible;
     contain-intrinsic-size: none;
   }

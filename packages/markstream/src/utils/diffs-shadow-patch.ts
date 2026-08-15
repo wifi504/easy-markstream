@@ -26,7 +26,9 @@ export function patchDiffsContainerBg(host: HTMLElement) {
   }
 
   const root = host.shadowRoot
-  if (!root || root.getElementById(DIFFS_STYLE_PATCH_ID)) { return }
+  if (!root || root.getElementById(DIFFS_STYLE_PATCH_ID)) {
+    return
+  }
 
   const style = document.createElement('style')
   style.id = DIFFS_STYLE_PATCH_ID
@@ -172,7 +174,9 @@ export function createDiffsBgObserver(
     for (const mutation of mutations) {
       mutation.addedNodes.forEach((node) => {
         if (!(node instanceof HTMLElement)) { return }
-        if (node.tagName === 'DIFFS-CONTAINER') { patchDiffsContainerBg(node) } else { scanAndPatchDiffsContainers(node) }
+        if (node.tagName === 'DIFFS-CONTAINER') {
+          patchDiffsContainerBg(node)
+        } else { scanAndPatchDiffsContainers(node) }
       })
     }
     onPatched?.()
