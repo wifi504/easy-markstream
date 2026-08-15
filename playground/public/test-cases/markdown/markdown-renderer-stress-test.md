@@ -1,4 +1,4 @@
-# [Markdown 渲染器极限压力测试文档](https://github.com/wifi504/easy-markstream/blob/main/playground/public/test-cases/markdown-renderer-stress-test.md)
+# [Markdown 渲染器极限压力测试文档](https://github.com/wifi504/easy-markstream/blob/main/playground/public/test-cases/markdown/markdown-renderer-stress-test.md)
 
 👆甚至第一行是个链接
 
@@ -581,7 +581,7 @@ https://baidu.com
 
 普通 Markdown 图片：
 
-![测试图片](/test-cases/image.svg)
+![测试图片](/test-cases/images/image.svg)
 
 ![动漫图片](https://file.moyubuluo.com/d/file/2025-10-25/7b17e07709b6820493ed2d2f1abedf6e.jpg)
 
@@ -589,13 +589,13 @@ https://baidu.com
 
 带标题：
 
-![Architecture](/test-cases/architecture.svg) "系统架构图")
+![Architecture](/test-cases/images/architecture.svg) "系统架构图")
 
 语法示例（以下为代码展示，不会渲染成图）：
 
 ```markdown
-![测试图片](/test-cases/image.svg)
-![Architecture](/test-cases/architecture.svg) "系统架构图")
+![测试图片](/test-cases/images/image.svg)
+![Architecture](/test-cases/images/architecture.svg) "系统架构图")
 ![动漫图片](https://file.moyubuluo.com/d/file/2025-10-25/7b17e07709b6820493ed2d2f1abedf6e.jpg)
 ![必然失败的图片](https://noimage)
 ```

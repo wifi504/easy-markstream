@@ -107,12 +107,17 @@ const testCases: PlaygroundTestCase[] = [
   {
     id: 'stress',
     label: '渲染压力测试',
-    url: '/test-cases/markdown-renderer-stress-test.md',
+    url: '/test-cases/markdown/markdown-renderer-stress-test.md',
   },
   {
     id: 'tea-market',
     label: '袋泡茶市场体量分析',
-    url: '/test-cases/tea-bags-market-us-canada.md',
+    url: '/test-cases/markdown/tea-bags-market-us-canada.md',
+  },
+  {
+    id: 'long-stories',
+    label: '超长故事全集',
+    url: '/test-cases/markdown/a-too-long-stories.md',
   },
 ]
 
