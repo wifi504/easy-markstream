@@ -2,7 +2,7 @@
   <div
     ref="rootRef"
     class="easy-markstream"
-    :class="{ 'is-plain-text': plainText }"
+    :class="{ 'is-plain-text': plainText, 'is-final': final && !plainText }"
   >
     <template v-if="plainText">
       <p

@@ -773,6 +773,20 @@
   margin-bottom: 0 !important;
 }
 
+/* final 后跳过屏外顶层块的绘制，高度仍在；流式中不开 */
+.easy-markstream.is-final > [data-custom-id='easy-markstream'] > .node-slot {
+  content-visibility: auto;
+  contain-intrinsic-size: 48px;
+  contain-intrinsic-size: auto 48px;
+}
+
+@media print {
+  .easy-markstream.is-final > [data-custom-id='easy-markstream'] > .node-slot {
+    content-visibility: visible;
+    contain-intrinsic-size: none;
+  }
+}
+
 /*
  * Teleport 到 body 的浮层吃不到 .easy-markstream 继承，单独钉字体。
  * 字号仍由各组件 scoped 样式负责。
