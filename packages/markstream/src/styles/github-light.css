@@ -284,10 +284,13 @@
   box-shadow: none !important;
 }
 
-/* Mermaid 源码区嵌套的代码块：块间距由外壳承担，内部不再加底边距 */
+/* Mermaid / ECharts 源码区嵌套的代码块：块间距由外壳承担，内部不再加底边距 */
 .easy-markstream [data-custom-id='easy-markstream'] .ms-mermaid .code-block-container,
 .easy-markstream [data-custom-id='easy-markstream'] .ms-mermaid .code-block-container.border,
-.easy-markstream [data-custom-id='easy-markstream'] .ms-mermaid .code-block-container.rounded-lg {
+.easy-markstream [data-custom-id='easy-markstream'] .ms-mermaid .code-block-container.rounded-lg,
+.easy-markstream [data-custom-id='easy-markstream'] .ms-echarts .code-block-container,
+.easy-markstream [data-custom-id='easy-markstream'] .ms-echarts .code-block-container.border,
+.easy-markstream [data-custom-id='easy-markstream'] .ms-echarts .code-block-container.rounded-lg {
   margin: 0 !important;
 }
 
@@ -757,7 +760,8 @@
   color: unset;
 }
 
-.easy-markstream [data-custom-id='easy-markstream'] .ms-mermaid {
+.easy-markstream [data-custom-id='easy-markstream'] .ms-mermaid,
+.easy-markstream [data-custom-id='easy-markstream'] .ms-echarts {
   margin: 0 0 16px;
 }
 

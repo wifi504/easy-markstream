@@ -12,6 +12,7 @@ const externals = [
   'katex',
   'markstream-vue',
   'mermaid',
+  'echarts',
   'stream-diffs',
 ]
 

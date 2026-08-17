@@ -110,6 +110,11 @@ const testCases: PlaygroundTestCase[] = [
     url: '/test-cases/markdown/markdown-renderer-stress-test.md',
   },
   {
+    id: 'echarts-common',
+    label: 'ECharts 常见图',
+    url: '/test-cases/markdown/echarts-common-charts.md',
+  },
+  {
     id: 'tea-market',
     label: '袋泡茶市场体量分析',
     url: '/test-cases/markdown/tea-bags-market-us-canada.md',

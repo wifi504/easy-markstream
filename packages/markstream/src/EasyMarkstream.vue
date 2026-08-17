@@ -29,6 +29,7 @@
       :code-block-props="codeBlockProps"
       :code-block-monaco-options="codeBlockMonacoOptions"
       :mermaid-props="mermaidProps as any"
+      :echarts-props="mermaidProps as any"
     />
     <span
       v-show="cursorEnabled"
@@ -64,6 +65,7 @@ import {
   watch,
 } from 'vue'
 import CodeBlock from './components/CodeBlock.vue'
+import EChartsBlock from './components/EChartsBlock.vue'
 import MarkdownCheckbox from './components/MarkdownCheckbox.vue'
 import MarkdownImage from './components/MarkdownImage.vue'
 import MarkdownLink from './components/MarkdownLink.vue'
@@ -127,6 +129,7 @@ enableKatex()
 setCustomComponents('easy-markstream', {
   code_block: CodeBlock,
   mermaid: MermaidBlock,
+  echarts: EChartsBlock,
   link: MarkdownLink,
   checkbox: MarkdownCheckbox,
   checkbox_input: MarkdownCheckbox,

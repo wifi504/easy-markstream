@@ -1,17 +1,16 @@
 <template>
-  <div ref="rootEl" class="ms-mermaid">
-    <header class="ms-mermaid__header">
-      <div class="ms-mermaid__toggle" role="group" aria-label="显示模式">
+  <div ref="rootEl" class="ms-echarts">
+    <header class="ms-echarts__header">
+      <div class="ms-echarts__toggle" role="group" aria-label="显示模式">
         <hover-popover content="预览">
           <button
             type="button"
-            class="ms-mermaid__toggle-btn"
+            class="ms-echarts__toggle-btn"
             :class="{ 'is-active': mode === 'preview' }"
             :disabled="loading"
             aria-label="预览"
             @click="setMode('preview')"
           >
-            <!-- 预览：eye -->
             <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
               <path fill="currentColor" d="M8 2c3.314 0 6.142 2.163 7.5 5.25C14.142 10.337 11.314 12.5 8 12.5S1.858 10.337.5 7.25C1.858 4.163 4.686 2 8 2Zm0 1.5C5.514 3.5 3.32 5.13 2.2 7.25 3.32 9.37 5.514 11 8 11s4.68-1.63 5.8-3.75C12.68 5.13 10.486 3.5 8 3.5Zm0 1.25a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Zm0 1.5a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z" />
             </svg>
@@ -20,7 +19,7 @@
         <hover-popover content="源码">
           <button
             type="button"
-            class="ms-mermaid__toggle-btn"
+            class="ms-echarts__toggle-btn"
             :class="{ 'is-active': mode === 'source' }"
             aria-label="源码"
             @click="setMode('source')"
@@ -30,30 +29,28 @@
         </hover-popover>
       </div>
 
-      <div class="ms-mermaid__actions">
+      <div class="ms-echarts__actions">
         <hover-popover :content="copied ? '已复制' : copyActionLabel">
           <button
             type="button"
-            class="ms-mermaid__icon-btn"
+            class="ms-echarts__icon-btn"
             :aria-label="copied ? '已复制' : copyActionLabel"
             :disabled="copyDisabled"
             @click="copyCurrent"
           >
-            <!-- 已复制：勾 -->
             <svg v-if="copied" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
               <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5L6.5 11.5 2.5 7.5" />
             </svg>
-            <!-- 复制 -->
             <svg v-else viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
               <path fill="currentColor" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z" />
-              <path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z" />
+              <path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0-.25-.25Z" />
             </svg>
           </button>
         </hover-popover>
         <hover-popover content="保存SVG">
           <button
             type="button"
-            class="ms-mermaid__icon-btn"
+            class="ms-echarts__icon-btn"
             aria-label="保存SVG"
             :disabled="!svgMarkup"
             @click="downloadSvg"
@@ -64,11 +61,11 @@
             </svg>
           </button>
         </hover-popover>
-        <div v-if="mode === 'preview'" class="ms-mermaid__zoom">
+        <div v-if="mode === 'preview'" class="ms-echarts__zoom">
           <hover-popover content="缩小">
             <button
               type="button"
-              class="ms-mermaid__icon-btn"
+              class="ms-echarts__icon-btn"
               aria-label="缩小"
               @click="zoomOut"
             >
@@ -78,7 +75,7 @@
           <hover-popover content="重置为100%">
             <button
               type="button"
-              class="ms-mermaid__zoom-label"
+              class="ms-echarts__zoom-label"
               aria-label="重置为100%"
               @click="resetZoom"
             >
@@ -88,7 +85,7 @@
           <hover-popover content="放大">
             <button
               type="button"
-              class="ms-mermaid__icon-btn"
+              class="ms-echarts__icon-btn"
               aria-label="放大"
               @click="zoomIn"
             >
@@ -99,8 +96,7 @@
       </div>
     </header>
 
-    <!-- v-if：避免在 preview 隐藏时增强 stream-diffs（宽度为 0 → 无高亮感 / 横滑失效） -->
-    <div v-if="mode === 'source'" class="ms-mermaid__source">
+    <div v-if="mode === 'source'" class="ms-echarts__source">
       <code-block-node
         :node="(codeNode as any)"
         :loading="loading"
@@ -118,7 +114,7 @@
     <div
       v-show="mode === 'preview'"
       ref="previewEl"
-      class="ms-mermaid__preview"
+      class="ms-echarts__preview"
       :class="{ 'is-dragging': dragging }"
       :style="previewBoxStyle"
       @pointerdown="onPointerDown"
@@ -127,29 +123,29 @@
       @pointercancel="onPointerUp"
       @lostpointercapture="onPointerUp"
     >
-      <div v-if="rendering" class="ms-mermaid__loading" role="status" aria-live="polite">
-        <span class="ms-mermaid__spinner" />
+      <div v-if="rendering" class="ms-echarts__loading" role="status" aria-live="polite">
+        <span class="ms-echarts__spinner" />
       </div>
-      <p v-else-if="renderError" class="ms-mermaid__error">
+      <p v-else-if="renderError" class="ms-echarts__error">
         {{ renderError }}
       </p>
       <div
-        v-else
-        ref="canvasEl"
-        class="ms-mermaid__canvas"
+        v-show="!renderError"
+        class="ms-echarts__canvas"
         :style="canvasTransformStyle"
-        v-html="svgMarkup"
-      />
+      >
+        <div ref="chartHostEl" class="ms-echarts__chart" />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { CodeBlockMonacoOptions, CodeBlockThemeProp } from 'markstream-vue'
+import * as echarts from 'echarts'
 import { CodeBlockNode } from 'markstream-vue'
-import mermaid from 'mermaid'
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { copySvgMarkupAsPng, copyText } from '../utils/clipboard-util'
+import { copySvgElementAsPng, copyText } from '../utils/clipboard-util'
 import { scanAndBindCodeHScroll } from '../utils/code-hscroll-util'
 import CodeBracketIcon from './CodeBracketIcon.vue'
 import HoverPopover from './HoverPopover.vue'
@@ -169,8 +165,10 @@ const props = withDefaults(defineProps<{
 }>(), {
   loading: false,
   isDark: false,
-  estimatedPreviewHeightPx: 200,
+  estimatedPreviewHeightPx: 400,
 })
+
+const PREVIEW_H = 400
 
 const DEFAULT_THEMES: [string, string] = ['github-dark', 'github-light']
 const DEFAULT_THEME: CodeBlockThemeProp = { dark: 'github-dark', light: 'github-light' }
@@ -184,37 +182,23 @@ const DEFAULT_MONACO: CodeBlockMonacoOptions = {
   padding: { top: 8, bottom: 8 },
 }
 
-let mermaidReady = false
-function ensureMermaid() {
-  if (mermaidReady) { return }
-  mermaid.initialize({
-    startOnLoad: false,
-    securityLevel: 'strict',
-    theme: props.isDark ? 'dark' : 'default',
-  })
-  mermaidReady = true
-}
-
 const mode = ref<Mode>(props.loading ? 'source' : 'preview')
 const rendering = ref(false)
 const renderError = ref('')
 const svgMarkup = ref('')
 
-/** 用户缩放；1 = 100% = SVG 宽度等于预览盒宽度 */
 const zoom = ref(1)
-/** 相对 SVG 原始尺寸：铺满预览盒宽度所需缩放 */
-const fitScale = ref(1)
-const naturalSize = ref({ w: 0, h: 0 })
-/** 100% 时锁定的预览盒尺寸 */
-const lockedSize = ref({ w: 0, h: 0 })
 const pan = ref({ x: 0, y: 0 })
 const dragging = ref(false)
+const lockedSize = ref({ w: 0, h: PREVIEW_H })
 
 const rootEl = ref<HTMLElement | null>(null)
 const previewEl = ref<HTMLElement | null>(null)
-const canvasEl = ref<HTMLElement | null>(null)
+const chartHostEl = ref<HTMLElement | null>(null)
 const copied = ref(false)
+const chartReady = ref(false)
 
+let chartInstance: echarts.ECharts | null = null
 let renderSeq = 0
 let resizeObserver: ResizeObserver | null = null
 let dragPointerId: number | null = null
@@ -225,42 +209,34 @@ const zoomPercent = computed(() => Math.round(zoom.value * 100))
 
 const copyActionLabel = computed(() => (mode.value === 'preview' ? '复制图片' : '复制源码'))
 const copyDisabled = computed(() => (
-  mode.value === 'preview' && (!svgMarkup.value || rendering.value || !!renderError.value)
+  mode.value === 'preview' && (!chartReady.value || rendering.value || !!renderError.value)
 ))
 
 const sourceCode = computed(() => {
   const n = props.node
-  return String(n?.code ?? n?.raw ?? n?.value ?? '')
+  return String(n?.code ?? n?.raw ?? n?.value ?? n?.content ?? '')
 })
 
 const codeNode = computed(() => ({
   type: 'code_block',
-  language: 'mermaid',
+  language: 'json',
   code: sourceCode.value,
   raw: sourceCode.value,
   loading: !!props.loading,
 }))
 
-/** 预览盒锁定为 100% 适配后的尺寸；放大时在盒内拖动 */
-const previewBoxStyle = computed(() => {
-  if (rendering.value || renderError.value) { return { minHeight: `${props.estimatedPreviewHeightPx || 200}px` } }
-  if (!lockedSize.value.w || !lockedSize.value.h) { return { minHeight: `${props.estimatedPreviewHeightPx || 200}px` } }
-  return {
-    width: '100%',
-    height: `${lockedSize.value.h}px`,
-  }
-})
+const previewBoxStyle = computed(() => ({
+  width: '100%',
+  height: `${PREVIEW_H}px`,
+}))
 
-/** 缩放改真实宽高（勿用 CSS scale，小屏放大易糊） */
 const canvasTransformStyle = computed(() => {
-  const { w, h } = naturalSize.value
-  if (!w || !h) { return undefined }
-  const dispW = w * fitScale.value * zoom.value
-  const dispH = h * fitScale.value * zoom.value
+  const w = lockedSize.value.w
+  const h = lockedSize.value.h || PREVIEW_H
   return {
-    width: `${dispW}px`,
-    height: `${dispH}px`,
-    transform: `translate(${pan.value.x}px, ${pan.value.y}px)`,
+    width: w ? `${w}px` : '100%',
+    height: `${h}px`,
+    transform: `translate(${pan.value.x}px, ${pan.value.y}px) scale(${zoom.value})`,
     transformOrigin: 'center center',
   }
 })
@@ -269,22 +245,26 @@ const resolvedThemes = computed(() => props.themes ?? DEFAULT_THEMES)
 const resolvedTheme = computed(() => props.theme ?? DEFAULT_THEME)
 const resolvedMonacoOptions = computed(() => props.monacoOptions ?? DEFAULT_MONACO)
 
-const renderId = computed(() => {
-  const key = props.indexKey ?? 'mermaid'
-  return `ms-mermaid-${String(key).replace(/[^\w-]/g, '-')}`
-})
-
 function setMode(next: Mode) {
   if (next === 'preview' && props.loading) { return }
   mode.value = next
   if (next === 'source') {
     void nextTick(() => {
-      // 等 CodeBlockNode / diffs 挂上后再绑横滑
       window.setTimeout(() => {
         scanAndBindCodeHScroll(rootEl.value ?? document)
       }, 80)
     })
+    return
   }
+  void nextTick(() => {
+    if (chartInstance && !renderError.value) {
+      layoutChartHost()
+      chartInstance.resize()
+      void nextTick(() => captureSvgMarkup())
+    } else if (!props.loading) {
+      void renderPreview()
+    }
+  })
 }
 
 function markCopied() {
@@ -298,12 +278,35 @@ function markCopied() {
 
 async function copyCurrent() {
   if (mode.value === 'preview') {
-    const cssWidth = lockedSize.value.w || previewEl.value?.clientWidth || 800
-    const cssHeight = lockedSize.value.h || props.estimatedPreviewHeightPx || 400
-    if (await copySvgMarkupAsPng(svgMarkup.value, { cssWidth, cssHeight })) { markCopied() }
+    const svg = findChartSvg()
+    if (!svg || !chartInstance) { return }
+    if (await copySvgElementAsPng(svg, {
+      cssWidth: Math.max(1, chartInstance.getWidth()),
+      cssHeight: Math.max(1, chartInstance.getHeight()),
+    })) { markCopied() }
     return
   }
   if (await copyText(sourceCode.value)) { markCopied() }
+}
+
+function findChartSvg(): SVGSVGElement | null {
+  const svg = chartHostEl.value?.querySelector('svg')
+  return svg instanceof SVGSVGElement ? svg : null
+}
+
+function captureSvgMarkup() {
+  const svg = findChartSvg()
+  if (!svg) {
+    svgMarkup.value = ''
+    return
+  }
+  const clone = svg.cloneNode(true) as SVGSVGElement
+  clone.removeAttribute('style')
+  if (chartInstance) {
+    clone.setAttribute('width', String(Math.round(chartInstance.getWidth())))
+    clone.setAttribute('height', String(Math.round(chartInstance.getHeight())))
+  }
+  svgMarkup.value = new XMLSerializer().serializeToString(clone)
 }
 
 function downloadSvg() {
@@ -312,7 +315,7 @@ function downloadSvg() {
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')
   a.href = url
-  a.download = 'diagram.svg'
+  a.download = 'chart.svg'
   a.click()
   URL.revokeObjectURL(url)
 }
@@ -330,97 +333,64 @@ function resetZoom() {
   pan.value = { x: 0, y: 0 }
 }
 
-/** 优先 viewBox，避免 getBBox 在甘特/状态图上读到错误超大尺寸 */
-function readNaturalSize(svg: SVGSVGElement) {
-  const viewBox = svg.viewBox?.baseVal
-  if (viewBox && viewBox.width > 0 && viewBox.height > 0) { return { w: viewBox.width, h: viewBox.height } }
-
-  const attrW = Number.parseFloat(svg.getAttribute('width') || '')
-  const attrH = Number.parseFloat(svg.getAttribute('height') || '')
-  if (attrW > 0 && attrH > 0) { return { w: attrW, h: attrH } }
-
-  try {
-    const box = svg.getBBox()
-    if (box.width > 0 && box.height > 0) { return { w: box.width, h: box.height } }
-  } catch {
-    // ignore
-  }
-
-  const rect = svg.getBoundingClientRect()
-  return {
-    w: rect.width || 400,
-    h: rect.height || 240,
-  }
+function disposeChart() {
+  chartInstance?.dispose()
+  chartInstance = null
+  chartReady.value = false
+  svgMarkup.value = ''
 }
 
-function applySvgDisplaySize() {
-  const svg = canvasEl.value?.querySelector('svg')
-  if (!(svg instanceof SVGSVGElement) || !naturalSize.value.w) { return }
-  const w = naturalSize.value.w * fitScale.value * zoom.value
-  const h = naturalSize.value.h * fitScale.value * zoom.value
-  svg.style.width = `${w}px`
-  svg.style.height = `${h}px`
-  svg.style.maxWidth = 'none'
-  svg.style.display = 'block'
-  svg.removeAttribute('width')
-  svg.removeAttribute('height')
-}
-
-const PREVIEW_MIN_H = 200
-const PREVIEW_MAX_H = 600
-
-/**
- * 100%：优先铺满预览盒宽度；若高度会超过 MAX，则改为 contain（缩进盒内）。
- * 居中由预览盒 flex 负责（矮图竖直、窄图水平）；pan 仅用于拖拽。
- */
-function updateFitToWidth() {
+function layoutChartHost() {
   const box = previewEl.value || rootEl.value
-  const { w, h } = naturalSize.value
-  if (!box || !w || !h) { return }
-
-  const availW = Math.max(1, (previewEl.value || box).clientWidth || box.clientWidth)
-  const scaleByWidth = availW / w
-  const heightIfFullWidth = h * scaleByWidth
-
-  let scale = scaleByWidth
-  let boxH = heightIfFullWidth
-  if (heightIfFullWidth > PREVIEW_MAX_H) {
-    scale = PREVIEW_MAX_H / h
-    boxH = PREVIEW_MAX_H
-  } else {
-    boxH = Math.max(PREVIEW_MIN_H, heightIfFullWidth)
-  }
-
-  fitScale.value = scale
-  lockedSize.value = {
-    w: availW,
-    h: boxH,
-  }
-
-  void nextTick(() => applySvgDisplaySize())
+  const host = chartHostEl.value
+  if (!box || !host) { return { w: 0, h: PREVIEW_H } }
+  const w = Math.max(1, (previewEl.value || box).clientWidth || box.clientWidth)
+  host.style.width = `${w}px`
+  host.style.height = `${PREVIEW_H}px`
+  lockedSize.value = { w, h: PREVIEW_H }
+  return { w, h: PREVIEW_H }
 }
 
-async function syncSvgMetrics() {
-  await nextTick()
-  await nextTick()
-  const svg = canvasEl.value?.querySelector('svg')
-  if (!(svg instanceof SVGSVGElement)) {
-    naturalSize.value = { w: 0, h: 0 }
-    lockedSize.value = { w: 0, h: 0 }
-    return
+function waitChartFinished(chart: echarts.ECharts, timeoutMs = 400): Promise<void> {
+  return new Promise((resolve) => {
+    let settled = false
+    const done = () => {
+      if (settled) { return }
+      settled = true
+      chart.off('finished', done)
+      resolve()
+    }
+    chart.on('finished', done)
+    window.setTimeout(done, timeoutMs)
+  })
+}
+
+function parseOption(code: string): Record<string, unknown> {
+  const option = JSON.parse(code) as unknown
+  if (!option || typeof option !== 'object' || Array.isArray(option)) {
+    throw new Error('图表配置必须是 JSON 对象')
   }
-  naturalSize.value = readNaturalSize(svg)
-  updateFitToWidth()
+  return option as Record<string, unknown>
 }
 
 async function renderPreview() {
+  if (props.loading || mode.value !== 'preview') { return }
+
   const code = sourceCode.value.trim()
   if (!code) {
-    svgMarkup.value = ''
-    renderError.value = ''
+    disposeChart()
+    renderError.value = '图表配置为空'
     rendering.value = false
-    naturalSize.value = { w: 0, h: 0 }
-    lockedSize.value = { w: 0, h: 0 }
+    return
+  }
+
+  let option: Record<string, unknown>
+  try {
+    option = parseOption(code)
+  } catch (err) {
+    disposeChart()
+    renderError.value = err instanceof Error ? err.message : String(err)
+    rendering.value = false
     return
   }
 
@@ -428,20 +398,35 @@ async function renderPreview() {
   rendering.value = true
   renderError.value = ''
   try {
-    ensureMermaid()
-    const { svg } = await mermaid.render(`${renderId.value}-${seq}`, code)
+    await nextTick()
     if (seq !== renderSeq) { return }
-    svgMarkup.value = svg
+    if (typeof window === 'undefined') {
+      rendering.value = false
+      return
+    }
+
+    const { w } = layoutChartHost()
+    const host = chartHostEl.value
+    if (!host || w <= 0) {
+      rendering.value = false
+      return
+    }
+
+    if (!chartInstance) {
+      chartInstance = echarts.init(host, undefined, { renderer: 'svg' })
+    }
+    chartInstance.setOption(option, true)
+    await waitChartFinished(chartInstance)
+    if (seq !== renderSeq) { return }
+    chartReady.value = true
     zoom.value = 1
     pan.value = { x: 0, y: 0 }
-    // 先结束 loading，再量尺寸（loading 时预览区可能未展示）
     rendering.value = false
-    await syncSvgMetrics()
+    await nextTick()
+    captureSvgMarkup()
   } catch (err) {
     if (seq !== renderSeq) { return }
-    svgMarkup.value = ''
-    naturalSize.value = { w: 0, h: 0 }
-    lockedSize.value = { w: 0, h: 0 }
+    disposeChart()
     renderError.value = err instanceof Error ? err.message : String(err)
   } finally {
     if (seq === renderSeq) { rendering.value = false }
@@ -449,7 +434,7 @@ async function renderPreview() {
 }
 
 function onPointerDown(e: PointerEvent) {
-  if (mode.value !== 'preview' || rendering.value || renderError.value || !svgMarkup.value) { return }
+  if (mode.value !== 'preview' || rendering.value || renderError.value || !chartReady.value) { return }
   if (e.button !== 0) { return }
   const target = e.target as HTMLElement | null
   if (target?.closest('button, a, input')) { return }
@@ -485,6 +470,9 @@ watch(
   (loading) => {
     if (loading) {
       mode.value = 'source'
+      disposeChart()
+      renderError.value = ''
+      rendering.value = false
       return
     }
     mode.value = 'preview'
@@ -494,35 +482,33 @@ watch(
 )
 
 watch(
-  () => [mode.value, sourceCode.value, props.isDark] as const,
+  () => [mode.value, sourceCode.value] as const,
   ([m]) => {
     if (m === 'preview' && !props.loading) { void renderPreview() }
   },
 )
 
-watch([fitScale, zoom, () => naturalSize.value.w], () => {
-  void nextTick(() => applySvgDisplaySize())
-})
-
 onMounted(() => {
+  if (mode.value === 'preview' && !props.loading && !chartInstance) {
+    void renderPreview()
+  }
   if (typeof ResizeObserver === 'undefined') { return }
   resizeObserver = new ResizeObserver(() => {
-    if (mode.value === 'preview' && naturalSize.value.w) {
-      const keepZoom = zoom.value
-      const keepPan = { ...pan.value }
-      updateFitToWidth()
-      zoom.value = keepZoom
-      pan.value = keepPan
-    }
+    if (mode.value !== 'preview' || !chartInstance || renderError.value) { return }
+    const box = previewEl.value
+    if (!box || box.clientWidth <= 0) { return }
+    layoutChartHost()
+    chartInstance.resize()
+    void nextTick(() => captureSvgMarkup())
   })
-  const observeTarget = rootEl.value
-  if (observeTarget) { resizeObserver.observe(observeTarget) }
+  if (previewEl.value) { resizeObserver.observe(previewEl.value) }
 })
 
 onBeforeUnmount(() => {
   renderSeq += 1
   resizeObserver?.disconnect()
   resizeObserver = null
+  disposeChart()
   if (copiedTimer) {
     clearTimeout(copiedTimer)
     copiedTimer = null
@@ -531,17 +517,15 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-.ms-mermaid {
+.ms-echarts {
   margin: var(--ms-flow-diagram-y, 16px) 0;
-
-  /* 不用 overflow:hidden，避免裁切 Header 上的 HoverPopover */
   overflow: visible;
   background: #fff;
   border: 1px solid var(--diagram-border, #d0d7de);
   border-radius: 4px;
 }
 
-.ms-mermaid__header {
+.ms-echarts__header {
   position: relative;
   z-index: 2;
   display: flex;
@@ -553,7 +537,7 @@ onBeforeUnmount(() => {
   border-bottom: 1px solid var(--diagram-border, #d0d7de);
 }
 
-.ms-mermaid__toggle {
+.ms-echarts__toggle {
   display: inline-flex;
   gap: 4px;
   align-items: center;
@@ -562,12 +546,10 @@ onBeforeUnmount(() => {
   border-radius: 6px;
 }
 
-.ms-mermaid__toggle-btn {
+.ms-echarts__toggle-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
-  /* 保持原先「预览 / 源码」两字宽度 */
   min-width: 24px;
   height: 22px;
   padding: 2px 10px;
@@ -580,31 +562,31 @@ onBeforeUnmount(() => {
   cursor: pointer;
 }
 
-.ms-mermaid__toggle-btn.is-active {
+.ms-echarts__toggle-btn.is-active {
   color: #1f2328;
   background: #fff;
   box-shadow: 0 0 0 1px rgb(31 35 40 / 8%);
 }
 
-.ms-mermaid__toggle-btn:disabled {
+.ms-echarts__toggle-btn:disabled {
   cursor: not-allowed;
   opacity: 0.45;
 }
 
-.ms-mermaid__actions {
+.ms-echarts__actions {
   display: flex;
   gap: 2px;
   align-items: center;
 }
 
-.ms-mermaid__zoom {
+.ms-echarts__zoom {
   display: inline-flex;
   gap: 2px;
   align-items: center;
   margin-left: 4px;
 }
 
-.ms-mermaid__zoom-label {
+.ms-echarts__zoom-label {
   min-width: 44px;
   padding: 2px 4px;
   color: #59636e;
@@ -616,7 +598,7 @@ onBeforeUnmount(() => {
   cursor: pointer;
 }
 
-.ms-mermaid__icon-btn {
+.ms-echarts__icon-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -629,35 +611,35 @@ onBeforeUnmount(() => {
   cursor: pointer;
 }
 
-.ms-mermaid__icon-btn svg,
-.ms-mermaid__toggle-btn svg {
+.ms-echarts__icon-btn svg,
+.ms-echarts__toggle-btn svg {
   flex: none;
   width: 14px !important;
   height: 14px !important;
   overflow: visible;
 }
 
-.ms-mermaid__icon-btn:hover:not(:disabled) {
+.ms-echarts__icon-btn:hover:not(:disabled) {
   background: #f0f2f4;
 }
 
-.ms-mermaid__icon-btn:disabled {
+.ms-echarts__icon-btn:disabled {
   cursor: not-allowed;
   opacity: 0.4;
 }
 
-.ms-mermaid__source {
+.ms-echarts__source {
   overflow: hidden;
   border-radius: 0 0 4px 4px;
 }
 
-.ms-mermaid__source :deep(.code-block-container) {
+.ms-echarts__source :deep(.code-block-container) {
   margin: 0 !important;
   border: 0 !important;
   border-radius: 0 !important;
 }
 
-.ms-mermaid__preview {
+.ms-echarts__preview {
   position: relative;
   display: flex;
   align-items: center;
@@ -670,37 +652,46 @@ onBeforeUnmount(() => {
   touch-action: none;
 }
 
-.ms-mermaid__preview.is-dragging {
+.ms-echarts__preview.is-dragging {
   cursor: grabbing;
 }
 
-.ms-mermaid__canvas {
+.ms-echarts__canvas {
   flex: 0 0 auto;
+  overflow: visible;
 }
 
-.ms-mermaid__loading,
-.ms-mermaid__error {
+.ms-echarts__chart {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.ms-echarts__loading,
+.ms-echarts__error {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
   display: flex;
-  flex: 1 1 auto;
   align-items: center;
-  align-self: stretch;
   justify-content: center;
   width: 100%;
   min-height: 120px;
   color: #59636e;
   font-size: 13px;
+  background: #fff;
 }
 
-.ms-mermaid__spinner {
+.ms-echarts__spinner {
   width: 20px;
   height: 20px;
   border: 2px solid rgb(89 99 110 / 15%);
   border-top-color: rgb(89 99 110 / 80%);
   border-radius: 50%;
-  animation: ms-mermaid-spin 0.8s linear infinite;
+  animation: ms-echarts-spin 0.8s linear infinite;
 }
 
-@keyframes ms-mermaid-spin {
+@keyframes ms-echarts-spin {
   to {
     transform: rotate(360deg);
   }
