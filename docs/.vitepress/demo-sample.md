@@ -27,7 +27,7 @@
 | :--- | :--- |
 | 公式 | KaTeX 行内与块级 |
 | 代码 | 语法高亮，含 diff |
-| 图表 | Mermaid |
+| 图表 | Mermaid；ECharts 常见图（柱 / 折 / 饼 / 散点 / 雷达） |
 | 链接 | 气泡、引用、文末来源 |
 | 图片 | 点击可放大 |
 
@@ -58,6 +58,16 @@ export const hello = 'world'
 flowchart LR
   A[Markdown] --> B[EasyMarkstream]
   B --> C[页面]
+```
+
+```echarts
+{
+  "title": { "text": "销量" },
+  "tooltip": { "trigger": "axis" },
+  "xAxis": { "type": "category", "data": ["A", "B", "C"] },
+  "yAxis": { "type": "value" },
+  "series": [{ "type": "bar", "data": [10, 20, 30] }]
+}
 ```
 
 ### 图片

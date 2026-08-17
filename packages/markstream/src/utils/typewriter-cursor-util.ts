@@ -8,6 +8,7 @@ const SKIP_CLOSEST = [
   '.code-block-container',
   '.ms-code-block',
   '.ms-mermaid',
+  '.ms-echarts',
   '.katex',
   '.katex-display',
   'script',
@@ -18,6 +19,7 @@ const SKIP_CLOSEST = [
 const DOCK_NODE_TYPES = new Set([
   'code_block',
   'mermaid',
+  'echarts',
   'table',
   'math_block',
   'image',

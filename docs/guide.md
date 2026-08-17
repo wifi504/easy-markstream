@@ -6,7 +6,16 @@
 pnpm add @ezview/markstream
 ```
 
-只需这一条。`katex`、`markstream-vue`、`mermaid`、`stream-diffs` 会随包安装。宿主必须已有 **Vue `^3.3.0`**。
+只需这一条。`katex`、`markstream-vue`、`mermaid`、`echarts`、`stream-diffs` 会随包安装。宿主必须已有 **Vue `^3.3.0`**。
+
+## 能力
+
+| 能力 | 说明 |
+| :--- | :--- |
+| 代码 | 语法高亮，含 diff |
+| 图表 | Mermaid；ECharts 常见图（柱 / 折 / 饼 / 散点 / 雷达），围栏语言 `echarts`，内容为 JSON option |
+| 公式 | KaTeX 行内与块级 |
+| 链接 | 气泡、引用、文末来源 |
 
 ## 用法
 

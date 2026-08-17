@@ -140,6 +140,7 @@ function blockText(node: AstNode): string {
 
     case 'code_block':
     case 'mermaid':
+    case 'echarts':
       return codeText(node)
 
     case 'math_block':

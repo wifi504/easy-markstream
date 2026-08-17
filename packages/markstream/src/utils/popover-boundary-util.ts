@@ -7,6 +7,7 @@ export type PopoverPlacement = 'top' | 'bottom'
 
 const HORIZONTAL_HOSTS = [
   '.ms-mermaid',
+  '.ms-echarts',
   '.code-block-container',
   '.easy-markstream',
 ] as const

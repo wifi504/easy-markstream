@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@ezview/markstream": "workspace:*",
+    "echarts": "^6.1.0",
     "katex": "^0.18.4",
     "markstream-vue": "^1.1.2",
     "mermaid": "^11.16.1",

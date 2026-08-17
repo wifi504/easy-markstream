@@ -1,6 +1,6 @@
 # @ezview/markstream
 
-基于 [markstream-vue](https://www.npmjs.com/package/markstream-vue) 的 Vue 3 流式 Markdown 组件：GitHub 浅色观感、代码块流式高亮、Mermaid、KaTeX、链接气泡。安装一个包即可用，不必再手动装 katex / mermaid / stream-diffs。
+基于 [markstream-vue](https://www.npmjs.com/package/markstream-vue) 的 Vue 3 流式 Markdown 组件：GitHub 浅色观感、代码块流式高亮、Mermaid、ECharts、KaTeX、链接气泡。安装一个包即可用，不必再手动装 katex / mermaid / echarts / stream-diffs。
 
 ```bash
 pnpm add @ezview/markstream
